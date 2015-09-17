@@ -1,4 +1,3 @@
-
 library(shiny)
 library(data.table)
 library(reshape2)
@@ -6,11 +5,16 @@ library(reshape2)
 
 data <- fread("data.csv")
 
-data <- data[, .(geographicAreaM49, geographicArea, measuredItemCPC, Item, measuredElement, Element, timePointYears, 
-               Year, Value, Status, Method)]
+## TODO (marcogarieri): Is this line of code needed?
+##                      Anyway geographicArea is not present, but Geographic Area.
+##                      Do you prefer to modify the data.csv or the code?
+data <- data[, .(geographicAreaM49, geographicArea, measuredItemCPC, Item, 
+                 measuredElement, Element, timePointYears, Year, Value, Status, Method)]
 
+## range(data$timePointYears) between 1989 and 2013, why this line of code?
 data <- data[data$timePointYears %in% 1500:3000,]
 
+## Same problem as before
 dataSUA <- data[, .(geographicArea, timePointYears, Item, Element, Value)]
 
 ## Create list with SUA Elements Trade Missing!!!

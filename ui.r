@@ -3,26 +3,22 @@ library(reshape2)
 library(data.table)
 
 
+
+## TODO (marcogarieri): There is no need to reload the data
+##                      I commented it, and it still runs 
+
 # load the data 
-
-data <- fread("data.csv")
-
-data <- data[, .(geographicAreaM49, geographicArea, measuredItemCPC, Item, measuredElement, Element, timePointYears, 
-               Year, Value, Status, Method)]
- 
+#data <- fread("data.csv")
+#data <- data[, .(geographicAreaM49, geographicArea, measuredItemCPC, Item, measuredElement, Element, timePointYears, 
+#               Year, Value, Status, Method)]
 ## apparently there is some mess in the years. This command should not be necessary
-data <- data[data$timePointYears %in% 1500:3000,]
-
-dataSUA <- data[, .(geographicArea, timePointYears, Item, Element, Value)]
-
+#data <- data[data$timePointYears %in% 1500:3000,]
+#dataSUA <- data[, .(geographicArea, timePointYears, Item, Element, Value)]
 ## Create list with SUA Elements Trade Missing!!!
-elementsSua <- c("Production [t]", "Seed [t]", "Loss [t]",  "Waste [t]", "Feed [t]", "Processed [t]", "Other Util [t]",
-                 "Stocks [#]")
-
-suaLong <- dataSUA[dataSUA$Element %in% elementsSua,]                 
-
-sua <- dcast(suaLong, geographicArea + timePointYears + Item ~ Element, value.var="Value")
-
+#elementsSua <- c("Production [t]", "Seed [t]", "Loss [t]",  "Waste [t]", "Feed [t]", "Processed [t]", "Other Util [t]",
+#                 "Stocks [#]")
+#suaLong <- dataSUA[dataSUA$Element %in% elementsSua,]                 
+#sua <- dcast(suaLong, geographicArea + timePointYears + Item ~ Element, value.var="Value")
 
 # Create the interface
 shinyUI(
