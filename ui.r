@@ -7,18 +7,21 @@ library(data.table)
 ## TODO (marcogarieri): There is no need to reload the data
 ##                      I commented it, and it still runs 
 
+## bernhard: Are you sure? It doesn't work on my end... I don't like it like this either, takes twice as long. I will
+##           dig into passing sessions in the server output.
+
 # load the data 
-#data <- fread("data.csv")
+#data <- fread("testData.csv")
 #data <- data[, .(geographicAreaM49, geographicArea, measuredItemCPC, Item, measuredElement, Element, timePointYears, 
-#               Year, Value, Status, Method)]
-## apparently there is some mess in the years. This command should not be necessary
-#data <- data[data$timePointYears %in% 1500:3000,]
+#             Year, Value, Status, Method)]
+
 #dataSUA <- data[, .(geographicArea, timePointYears, Item, Element, Value)]
 ## Create list with SUA Elements Trade Missing!!!
 #elementsSua <- c("Production [t]", "Seed [t]", "Loss [t]",  "Waste [t]", "Feed [t]", "Processed [t]", "Other Util [t]",
 #                 "Stocks [#]")
-#suaLong <- dataSUA[dataSUA$Element %in% elementsSua,]                 
-#sua <- dcast(suaLong, geographicArea + timePointYears + Item ~ Element, value.var="Value")
+#suaLong <- dataSUA[dataSUA$Element %in% elementsSua,] 
+
+#sua <- dcast.data.table(suaLong, geographicArea + timePointYears + Item ~ Element, value.var="Value")
 
 # Create the interface
 shinyUI(
@@ -99,9 +102,50 @@ shinyUI(
            ),
   
   
-  #FBS page
-  tabPanel(title= "FBS")
-  
+  #Compiler Page
+  tabPanel(title= "Compile SUA and FBS",
+           shinyUI(fluidPage(
+                 navlistPanel("",
+                       tabPanel("Production",
+                            h3("Production Data & Estimation")
+                       ),
+                       
+                       tabPanel("Trade",
+                            h3("Import and Export Data")
+                       ),
+                       
+                       tabPanel("Stocks",
+                            h3("Stocks Data & Estimation")
+                       ),
+                       
+                       tabPanel("Food",
+                                h3("Food Data & Estimation")
+                       ),
+                       
+                       tabPanel("Feed",
+                                h3("Feed Data & Estimation")
+                       ),
+                       
+                       tabPanel("Seed",
+                                h3("Seed Data & Estimation")
+                       ),
+                       
+                       tabPanel("Food Losses and Waste",
+                                h3("Food Losses and Waste Data & Estimation")
+                       ),
+                       
+                       tabPanel("Industrial Use",
+                                h3("Industrial Use & Estimation")
+                       
+                                ),
+                       tabPanel("Tourist Consumption",
+                                h3("Tourist Consumption & Estimation")
+                       )
+                       
+                       
+  )
+  )
+           ))
  )
 )
 

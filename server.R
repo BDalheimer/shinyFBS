@@ -5,30 +5,31 @@ library(reshape2)
 
 data <- fread("data.csv")
 
-## TODO (marcogarieri): Is this line of code needed?
+## TODO (marcogarieri): Is this line of code needed? 
 ##                      Anyway geographicArea is not present, but Geographic Area.
 ##                      Do you prefer to modify the data.csv or the code?
+## bernhard:            I don't understand the comment.
+
 data <- data[, .(geographicAreaM49, geographicArea, measuredItemCPC, Item, 
                  measuredElement, Element, timePointYears, Year, Value, Status, Method)]
 
-## range(data$timePointYears) between 1989 and 2013, why this line of code?
-data <- data[data$timePointYears %in% 1500:3000,]
 
 ## Same problem as before
 dataSUA <- data[, .(geographicArea, timePointYears, Item, Element, Value)]
 
 ## Create list with SUA Elements Trade Missing!!!
 elementsSua <- c("Production [t]", "Seed [t]", "Loss [t]",  "Waste [t]", "Feed [t]", "Processed [t]", "Other Util [t]",
-                 "Stocks [#]")
+                "Stocks [#]")
 
 suaLong <- dataSUA[dataSUA$Element %in% elementsSua,]                 
 
 
 ## Convert data into wide format for SUA format: Prod Imp ... . Problem: there are duplicate elements (to examine further)
+## Couldn't find the duplicate elements. Also, the data is incomplete. I started working with a subset of only one country 
 sua <- dcast.data.table(suaLong, geographicArea + timePointYears + Item ~ Element, value.var="Value")
 
 
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
 
   # selections filters for Browse Data Page
   output$tableData <- renderDataTable({ 
