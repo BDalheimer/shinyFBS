@@ -23,6 +23,21 @@ library(data.table)
 
 #sua <- dcast.data.table(suaLong, geographicArea + timePointYears + Item ~ Element, value.var="Value")
 
+suaElementNames <- c("Production", "Import", "Export", "Stocks", "Feed", "Food", "Seed", "FLW", "TC", "Industrial Use")
+
+# empty data sets for the modules
+
+emptyData <- data.frame(Commodity = unique(data$Item), ExpectedValue = rep(0, length(unique(data$Item))),
+                        UpperBound = rep(0, length(unique(data$Item))), 
+                        LowerBound = rep(0, length(unique(data$Item))),
+                        stringsAsFactors = FALSE, row.names = unique(data$measuredItemCPC))
+
+
+for(i in suaElementNames){
+    assign(paste0(i), emptyData)
+    
+}
+
 # Create the interface
 shinyUI(
 
@@ -107,45 +122,100 @@ shinyUI(
            shinyUI(fluidPage(
                  navlistPanel("",
                        tabPanel("Production",
-                            h3("Production Data & Estimation")
+                            h3("Production Data & Estimation"),
+                            
+                            rhandsontable(Production) %>%
+                              hot_cols(colWidths = 100) %>%
+                              hot_rows(rowHeights = 20) %>%
+                              hot_col("Commodity", readOnly = TRUE, colWidths = 400)# %>%
+                              #hot_col(row.names, colWidths = 80)
+                              #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
+                            
+                            
                        ),
                        
                        tabPanel("Trade",
-                            h3("Import and Export Data")
+                            h3("Import and Export Data"),
+                            rhandsontable(Production) %>%
+                              hot_cols(colWidths = 100) %>%
+                              hot_rows(rowHeights = 20) %>%
+                              hot_col("Commodity", readOnly = TRUE, colWidths = 400)
+                              #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
                        ),
                        
                        tabPanel("Stocks",
-                            h3("Stocks Data & Estimation")
+                            h3("Stocks Data & Estimation"),
+                            rhandsontable(Stocks) %>%
+                              hot_cols(colWidths = 100) %>%
+                              hot_rows(rowHeights = 20) %>%
+                              hot_col("Commodity", readOnly = TRUE, colWidths = 400)
+                              #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
                        ),
                        
                        tabPanel("Food",
-                                h3("Food Data & Estimation")
+                                h3("Food Data & Estimation"),
+                                rhandsontable(Food) %>%
+                                  hot_cols(colWidths = 100) %>%
+                                  hot_rows(rowHeights = 20) %>%
+                                  hot_col("Commodity", readOnly = TRUE, colWidths = 400)
+                                  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
+                                
                        ),
                        
                        tabPanel("Feed",
-                                h3("Feed Data & Estimation")
+                                h3("Feed Data & Estimation"),
+                                rhandsontable(Feed) %>%
+                                  hot_cols(colWidths = 100) %>%
+                                  hot_rows(rowHeights = 20) %>%
+                                  hot_col("Commodity", readOnly = TRUE, colWidths = 400)
+                                  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
                        ),
                        
                        tabPanel("Seed",
-                                h3("Seed Data & Estimation")
+                                h3("Seed Data & Estimation"),
+                                rhandsontable(Seed) %>%
+                                  hot_cols(colWidths = 100) %>%
+                                  hot_rows(rowHeights = 20) %>%
+                                  hot_col("Commodity", readOnly = TRUE, colWidths = 400)
+                                  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
                        ),
                        
                        tabPanel("Food Losses and Waste",
-                                h3("Food Losses and Waste Data & Estimation")
+                                h3("Food Losses and Waste Data & Estimation"),
+                                rhandsontable(FLW) %>%
+                                  hot_cols(colWidths = 100) %>%
+                                  hot_rows(rowHeights = 20) %>%
+                                  hot_col("Commodity", readOnly = TRUE, colWidths = 400)
+                                  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
                        ),
                        
                        tabPanel("Industrial Use",
-                                h3("Industrial Use & Estimation")
+                                h3("Industrial Use & Estimation"),
+                                rhandsontable(`Industrial Use`) %>%
+                                  hot_cols(colWidths = 100) %>%
+                                  hot_rows(rowHeights = 20) %>%
+                                  hot_col("Commodity", readOnly = TRUE, colWidths = 400)
+                                  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
+                       ),
                        
-                                ),
                        tabPanel("Tourist Consumption",
-                                h3("Tourist Consumption & Estimation")
+                                h3("Tourist Consumption & Estimation"),
+                                rhandsontable(TC) %>%
+                                  hot_cols(colWidths = 100) %>%
+                                  hot_rows(rowHeights = 20) %>%
+                                  hot_col("Commodity", readOnly = TRUE, colWidths = 400)
+                                  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
                        )
                        
                        
-  )
-  )
-           ))
+                )
+            )     )
+  ),
+  
+  tabPanel(title= "Help"),
+  
+  tabPanel(title= "About")
+
  )
 )
 

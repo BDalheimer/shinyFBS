@@ -1,9 +1,11 @@
 library(shiny)
 library(data.table)
 library(reshape2)
-# Load data
+library(rhandsontable)
 
-data <- fread("data.csv")
+# Load data
+setwd("/home/bernhard/shinyFBS")
+data <- fread("testData.csv")
 
 ## TODO (marcogarieri): Is this line of code needed? 
 ##                      Anyway geographicArea is not present, but Geographic Area.
