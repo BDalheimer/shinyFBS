@@ -144,13 +144,13 @@ shinyUI(
                        
                        tabPanel("Food",
                                 h3(textOutput("Food Use")),
-                                rHandsontableOutput("tableFood")
+                                rHandsontableOutput("tableFood Use")
                                 
                        ),
                        
                        tabPanel("Feed",
                                 h3(textOutput("Feed Use")),
-                                rHandsontableOutput("tableFeed")
+                                rHandsontableOutput("tableFeed Use")
                        ),
                        
                        tabPanel("Seed",
@@ -160,16 +160,16 @@ shinyUI(
                        
                        tabPanel("Food Losses & Waste",
                                 h3(textOutput("Food Losses & Waste")),
-                                rHandsontableOutput("tableFLW")
+                                rHandsontableOutput("tableFood Losses & Waste")
                        ),
                        
                        tabPanel("Industrial Use",
                                 h3(textOutput("Industrial Use")),
-                                rHandsontableOutput("tableIndustrial")
+                                rHandsontableOutput("tableIndustrial Use")
                        ),
                        
                        tabPanel("Tourist Consumption",
-                                h3(textOutput("Tourist Consumption")),
+                                h3(textOutput("tableTourist Consumption")),
                                 rHandsontableOutput("tableTC")
                        )
                        

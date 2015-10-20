@@ -41,10 +41,9 @@ emptyData <- data.frame(Commodity = unique(data$Item), ExpectedValue = rep(0, le
 
 
 for(i in suaElementNames){
-  assign(paste0(i), emptyData)
+  (assign(paste0(i), emptyData))
   
 }
-
 
 shinyServer(function(input, output, session) {
 
@@ -99,87 +98,16 @@ for( x in suaElementNames) {local({
 }
 
 
-# input/output tables for SUA elemnts (this could be transformed into a more efficient function)
-output$tableProduction <- renderRHandsontable({
-
-  rhandsontable(Production) %>%
-    hot_cols(colWidths = 100) %>%
-    hot_rows(rowHeights = 20) %>%
-    hot_col("Commodity", readOnly = TRUE, colWidths = 400)
-    #hot_col(row.names, colWidths = 80)
-    #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
-  
-})
-
-output$tableStocks <- renderRHandsontable({
-  
-  rhandsontable(Stocks) %>%
-    hot_cols(colWidths = 100) %>%
-    hot_rows(rowHeights = 20) %>%
-    hot_col("Commodity", readOnly = TRUE, colWidths = 400)
-  #hot_col(row.names, colWidths = 80)
-  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
-})
-
-output$tableFood <- renderRHandsontable({
-  
-  rhandsontable(`Food Use`) %>%
-    hot_cols(colWidths = 100) %>%
-    hot_rows(rowHeights = 20) %>%
-    hot_col("Commodity", readOnly = TRUE, colWidths = 400)
-  #hot_col(row.names, colWidths = 80)
-  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
-})
-
-output$tableFeed <- renderRHandsontable({
-  
-  rhandsontable(`Feed Use`) %>%
-    hot_cols(colWidths = 100) %>%
-    hot_rows(rowHeights = 20) %>%
-    hot_col("Commodity", readOnly = TRUE, colWidths = 400)
-  #hot_col(row.names, colWidths = 80)
-  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
-})
-
-output$tableSeed <- renderRHandsontable({
-  
-  rhandsontable(Seed) %>%
-    hot_cols(colWidths = 100) %>%
-    hot_rows(rowHeights = 20) %>%
-    hot_col("Commodity", readOnly = TRUE, colWidths = 400)
-  #hot_col(row.names, colWidths = 80)
-  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
-})
-
-output$tableFLW <- renderRHandsontable({
-  
-  rhandsontable(`Food Losses & Waste`) %>%
-    hot_cols(colWidths = 100) %>%
-    hot_rows(rowHeights = 20) %>%
-    hot_col("Commodity", readOnly = TRUE, colWidths = 400)
-  #hot_col(row.names, colWidths = 80)
-  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
-})
-
-output$tableTC <- renderRHandsontable({
-  
-  rhandsontable(`Tourist Consumption`) %>%
-    hot_cols(colWidths = 100) %>%
-    hot_rows(rowHeights = 20) %>%
-    hot_col("Commodity", readOnly = TRUE, colWidths = 400)
-  #hot_col(row.names, colWidths = 80)
-  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
-})
-
-output$tableIndustrial <- renderRHandsontable({
-  
-  rhandsontable(`Industrial Use`) %>%
-    hot_cols(colWidths = 100) %>%
-    hot_rows(rowHeights = 20) %>%
-    hot_col("Commodity", readOnly = TRUE, colWidths = 400)
-  #hot_col(row.names, colWidths = 80)
-  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
-})
-
+# input/output tables for SUA elemnts 
+for(x in suaElementNames) {local({
+  i <- x
+  output[[paste("table",i, sep="")]] <- renderRHandsontable({
+    rhandsontable(get(i)) %>%
+      hot_cols(colWidths = 100) %>%
+      hot_rows(rowHeights = 20) %>%
+      hot_col("Commodity", readOnly = TRUE, colWidths = 400)
+    
+  })
+})}
 
 })
