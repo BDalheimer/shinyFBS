@@ -4,7 +4,7 @@ library(reshape2)
 library(rhandsontable)
 
 # Load data
-setwd("/home/bernhard/shinyFBS")
+
 data <- fread("testData.csv")
 
 ## TODO (marcogarieri): Is this line of code needed? 
@@ -21,7 +21,7 @@ dataSUA <- data[, .(geographicArea, timePointYears, Item, Element, Value)]
 
 ## Create list with SUA Elements Trade Missing!!!
 elementsSua <- c("Production [t]", "Seed [t]", "Loss [t]",  "Waste [t]", "Feed [t]", "Processed [t]", "Other Util [t]",
-                "Stocks [#]")
+                 "Stocks [#]")
 
 suaLong <- dataSUA[dataSUA$Element %in% elementsSua,]                 
 
@@ -30,9 +30,26 @@ suaLong <- dataSUA[dataSUA$Element %in% elementsSua,]
 ## Couldn't find the duplicate elements. Also, the data is incomplete. I started working with a subset of only one country 
 sua <- dcast.data.table(suaLong, geographicArea + timePointYears + Item ~ Element, value.var="Value")
 
+suaElementNames <- c("Production", "Import", "Export", "Stocks", "Feed Use", "Food Use", "Seed", "Food Losses & Waste", 
+                     "Tourist Consumption", "Industrial Use")
+
+## create empty datasets for each sua element, which will be filled by user or R module
+emptyData <- data.frame(Commodity = unique(data$Item), ExpectedValue = rep(0, length(unique(data$Item))),
+                        UpperBound = rep(0, length(unique(data$Item))), 
+                        LowerBound = rep(0, length(unique(data$Item))),
+                        stringsAsFactors = FALSE, row.names = unique(data$measuredItemCPC))
+
+
+for(i in suaElementNames){
+  assign(paste0(i), emptyData)
+  
+}
+
 
 shinyServer(function(input, output, session) {
 
+  
+  
   # selections filters for Browse Data Page
   output$tableData <- renderDataTable({ 
     
@@ -70,6 +87,98 @@ output$tableSUA <- renderDataTable({
     
   sua
   
+})
+
+
+
+# Just some text output which depends on the coosen year, will be used in headers
+for( x in suaElementNames) {local({
+  i <- x
+  output[[paste(i)]] <- renderText({paste(i ,input$FBSSUAyear)})
+})
+}
+
+
+# input/output tables for SUA elemnts (this could be transformed into a more efficient function)
+output$tableProduction <- renderRHandsontable({
+
+  rhandsontable(Production) %>%
+    hot_cols(colWidths = 100) %>%
+    hot_rows(rowHeights = 20) %>%
+    hot_col("Commodity", readOnly = TRUE, colWidths = 400)
+    #hot_col(row.names, colWidths = 80)
+    #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
+  
+})
+
+output$tableStocks <- renderRHandsontable({
+  
+  rhandsontable(Stocks) %>%
+    hot_cols(colWidths = 100) %>%
+    hot_rows(rowHeights = 20) %>%
+    hot_col("Commodity", readOnly = TRUE, colWidths = 400)
+  #hot_col(row.names, colWidths = 80)
+  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
+})
+
+output$tableFood <- renderRHandsontable({
+  
+  rhandsontable(`Food Use`) %>%
+    hot_cols(colWidths = 100) %>%
+    hot_rows(rowHeights = 20) %>%
+    hot_col("Commodity", readOnly = TRUE, colWidths = 400)
+  #hot_col(row.names, colWidths = 80)
+  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
+})
+
+output$tableFeed <- renderRHandsontable({
+  
+  rhandsontable(`Feed Use`) %>%
+    hot_cols(colWidths = 100) %>%
+    hot_rows(rowHeights = 20) %>%
+    hot_col("Commodity", readOnly = TRUE, colWidths = 400)
+  #hot_col(row.names, colWidths = 80)
+  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
+})
+
+output$tableSeed <- renderRHandsontable({
+  
+  rhandsontable(Seed) %>%
+    hot_cols(colWidths = 100) %>%
+    hot_rows(rowHeights = 20) %>%
+    hot_col("Commodity", readOnly = TRUE, colWidths = 400)
+  #hot_col(row.names, colWidths = 80)
+  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
+})
+
+output$tableFLW <- renderRHandsontable({
+  
+  rhandsontable(`Food Losses & Waste`) %>%
+    hot_cols(colWidths = 100) %>%
+    hot_rows(rowHeights = 20) %>%
+    hot_col("Commodity", readOnly = TRUE, colWidths = 400)
+  #hot_col(row.names, colWidths = 80)
+  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
+})
+
+output$tableTC <- renderRHandsontable({
+  
+  rhandsontable(`Tourist Consumption`) %>%
+    hot_cols(colWidths = 100) %>%
+    hot_rows(rowHeights = 20) %>%
+    hot_col("Commodity", readOnly = TRUE, colWidths = 400)
+  #hot_col(row.names, colWidths = 80)
+  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
+})
+
+output$tableIndustrial <- renderRHandsontable({
+  
+  rhandsontable(`Industrial Use`) %>%
+    hot_cols(colWidths = 100) %>%
+    hot_rows(rowHeights = 20) %>%
+    hot_col("Commodity", readOnly = TRUE, colWidths = 400)
+  #hot_col(row.names, colWidths = 80)
+  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
 })
 
 

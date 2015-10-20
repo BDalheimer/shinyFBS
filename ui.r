@@ -1,7 +1,7 @@
 library(shiny)
 library(reshape2)
 library(data.table)
-
+library(rhandsontable)
 
 
 ## TODO (marcogarieri): There is no need to reload the data
@@ -23,24 +23,15 @@ library(data.table)
 
 #sua <- dcast.data.table(suaLong, geographicArea + timePointYears + Item ~ Element, value.var="Value")
 
-suaElementNames <- c("Production", "Import", "Export", "Stocks", "Feed", "Food", "Seed", "FLW", "TC", "Industrial Use")
+
 
 # empty data sets for the modules
 
-emptyData <- data.frame(Commodity = unique(data$Item), ExpectedValue = rep(0, length(unique(data$Item))),
-                        UpperBound = rep(0, length(unique(data$Item))), 
-                        LowerBound = rep(0, length(unique(data$Item))),
-                        stringsAsFactors = FALSE, row.names = unique(data$measuredItemCPC))
 
-
-for(i in suaElementNames){
-    assign(paste0(i), emptyData)
-    
-}
 
 # Create the interface
 shinyUI(
-
+    #fileInput('data')
 
   #Title  
  navbarPage("Food Balance Sheet Compiler",
@@ -119,92 +110,67 @@ shinyUI(
   
   #Compiler Page
   tabPanel(title= "Compile SUA and FBS",
-           shinyUI(fluidPage(
-                 navlistPanel("",
+           shinyUI(fluidPage(fluidRow(column(width = 3,
+             
+             selectInput("FBSSUAyear", 
+                         "Year:", 
+                         c(unique(sua$timePointYears[sua$timePointYears > 2012]), #we'll only create new FBS
+                           as.character(as.numeric(max(sua$timePointYears[sua$timePointYears > 2012]))+ 1))
+             ), widths = c(4,1)), column(width = 9, h1("Data Collection and Estimation for SUA"))), 
+                 navlistPanel(widths = c(3,8), 
+                  
+                       ## For country specific version       
+                      # tabPanel("Year",        
+                       #       h3("Please select Year to construct SUA and FBS for:"),
+                              
+                               
+                                 
+               #  ),
+                 
                        tabPanel("Production",
-                            h3("Production Data & Estimation"),
-                            
-                            rhandsontable(Production) %>%
-                              hot_cols(colWidths = 100) %>%
-                              hot_rows(rowHeights = 20) %>%
-                              hot_col("Commodity", readOnly = TRUE, colWidths = 400)# %>%
-                              #hot_col(row.names, colWidths = 80)
-                              #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
-                            
-                            
+                            h3(textOutput("Production")),
+                            rHandsontableOutput("tableProduction")
                        ),
                        
                        tabPanel("Trade",
-                            h3("Import and Export Data"),
-                            rhandsontable(Production) %>%
-                              hot_cols(colWidths = 100) %>%
-                              hot_rows(rowHeights = 20) %>%
-                              hot_col("Commodity", readOnly = TRUE, colWidths = 400)
-                              #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
+                            h3("Import and Export Data")
+                            
                        ),
                        
                        tabPanel("Stocks",
-                            h3("Stocks Data & Estimation"),
-                            rhandsontable(Stocks) %>%
-                              hot_cols(colWidths = 100) %>%
-                              hot_rows(rowHeights = 20) %>%
-                              hot_col("Commodity", readOnly = TRUE, colWidths = 400)
-                              #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
+                            h3(textOutput("Stocks")),
+                            rHandsontableOutput("tableStocks")
                        ),
                        
                        tabPanel("Food",
-                                h3("Food Data & Estimation"),
-                                rhandsontable(Food) %>%
-                                  hot_cols(colWidths = 100) %>%
-                                  hot_rows(rowHeights = 20) %>%
-                                  hot_col("Commodity", readOnly = TRUE, colWidths = 400)
-                                  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
+                                h3(textOutput("Food Use")),
+                                rHandsontableOutput("tableFood")
                                 
                        ),
                        
                        tabPanel("Feed",
-                                h3("Feed Data & Estimation"),
-                                rhandsontable(Feed) %>%
-                                  hot_cols(colWidths = 100) %>%
-                                  hot_rows(rowHeights = 20) %>%
-                                  hot_col("Commodity", readOnly = TRUE, colWidths = 400)
-                                  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
+                                h3(textOutput("Feed Use")),
+                                rHandsontableOutput("tableFeed")
                        ),
                        
                        tabPanel("Seed",
-                                h3("Seed Data & Estimation"),
-                                rhandsontable(Seed) %>%
-                                  hot_cols(colWidths = 100) %>%
-                                  hot_rows(rowHeights = 20) %>%
-                                  hot_col("Commodity", readOnly = TRUE, colWidths = 400)
-                                  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
+                                h3(textOutput("Seed")),
+                                rHandsontableOutput("tableSeed")
                        ),
                        
-                       tabPanel("Food Losses and Waste",
-                                h3("Food Losses and Waste Data & Estimation"),
-                                rhandsontable(FLW) %>%
-                                  hot_cols(colWidths = 100) %>%
-                                  hot_rows(rowHeights = 20) %>%
-                                  hot_col("Commodity", readOnly = TRUE, colWidths = 400)
-                                  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
+                       tabPanel("Food Losses & Waste",
+                                h3(textOutput("Food Losses & Waste")),
+                                rHandsontableOutput("tableFLW")
                        ),
                        
                        tabPanel("Industrial Use",
-                                h3("Industrial Use & Estimation"),
-                                rhandsontable(`Industrial Use`) %>%
-                                  hot_cols(colWidths = 100) %>%
-                                  hot_rows(rowHeights = 20) %>%
-                                  hot_col("Commodity", readOnly = TRUE, colWidths = 400)
-                                  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
+                                h3(textOutput("Industrial Use")),
+                                rHandsontableOutput("tableIndustrial")
                        ),
                        
                        tabPanel("Tourist Consumption",
-                                h3("Tourist Consumption & Estimation"),
-                                rhandsontable(TC) %>%
-                                  hot_cols(colWidths = 100) %>%
-                                  hot_rows(rowHeights = 20) %>%
-                                  hot_col("Commodity", readOnly = TRUE, colWidths = 400)
-                                  #hot_context_menu(allowRowEdit = FALSE, allowColEdit = FALSE)
+                                h3(textOutput("Tourist Consumption")),
+                                rHandsontableOutput("tableTC")
                        )
                        
                        
@@ -213,6 +179,7 @@ shinyUI(
   ),
   
   tabPanel(title= "Help"),
+  ## Orangbook here
   
   tabPanel(title= "About")
 
