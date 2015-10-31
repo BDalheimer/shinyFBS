@@ -103,9 +103,9 @@ for(x in suaElementNames) {local({
   i <- x
   output[[paste("table",i, sep="")]] <- renderRHandsontable({
     rhandsontable(get(i)) %>%
-      hot_cols(colWidths = 100) %>%
+      hot_cols(colWidths = 200) %>%
       hot_rows(rowHeights = 20) %>%
-      hot_col("Commodity", readOnly = TRUE, colWidths = 400)
+      hot_col("Commodity", readOnly = TRUE, colWidths = 600)
     
   })
 })}

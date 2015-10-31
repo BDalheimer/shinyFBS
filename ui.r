@@ -116,9 +116,14 @@ shinyUI(
           as.character(as.numeric(max(sua$timePointYears[sua$timePointYears > 2012]))+ 1))
            ), widths = c(4,1)), column(width = 9, h1("Data Collection and Estimation for SUA"))), 
            #navlistPanel(widths = c(3,8), 
-           tabsetPanel("Production",
+           tabsetPanel("FBS and SUA",
                        tabPanel("Production",
-                                h3(textOutput("Production")),
+                       fluidRow(column(4,h1(textOutput("Production")) ),
+                                column(2, actionButton("productionEst","Estimate Data ", styleclass="primary", block=T)),
+                                column(2, actionButton("productionSave", "Save Production Data", styleclass="primary",block =T)),         
+                                column(2, actionButton("vizualize", "Vizualize", styleclass="primary",block =T)),
+                                column(2, actionButton("upload", "Upload File", styleclass="primary",block =T))),
+          
                                 rHandsontableOutput("tableProduction")
                        ),
                        
@@ -161,7 +166,17 @@ shinyUI(
                        tabPanel("Tourist Consumption",
                                 h3(textOutput("tableTourist Consumption")),
                                 rHandsontableOutput("tableTC")
-                       ) )
+                       ),
+                       
+                       tabPanel("Save All"),
+                       tabPanel("Clear All")
+                       
+                                
+                       
+                       
+                       
+                       
+                       )
                       
                        
                        
