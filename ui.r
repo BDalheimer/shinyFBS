@@ -110,36 +110,26 @@ shinyUI(
   
   #Compiler Page
   tabPanel(title= "Compile SUA and FBS",
-           shinyUI(fluidPage(fluidRow(column(width = 3,
-             
-             selectInput("FBSSUAyear", 
-                         "Year:", 
-                         c(unique(sua$timePointYears[sua$timePointYears > 2012]), #we'll only create new FBS
-                           as.character(as.numeric(max(sua$timePointYears[sua$timePointYears > 2012]))+ 1))
-             ), widths = c(4,1)), column(width = 9, h1("Data Collection and Estimation for SUA"))), 
-                 navlistPanel(widths = c(3,8), 
-                  
-                       ## For country specific version       
-                      # tabPanel("Year",        
-                       #       h3("Please select Year to construct SUA and FBS for:"),
-                              
-                               
-                                 
-               #  ),
-                 
+           fluidRow(column(width = 3,selectInput("FBSSUAyear", 
+                                                 "Year:", 
+          c(unique(sua$timePointYears[sua$timePointYears > 2012]), #we'll only create new FBS
+          as.character(as.numeric(max(sua$timePointYears[sua$timePointYears > 2012]))+ 1))
+           ), widths = c(4,1)), column(width = 9, h1("Data Collection and Estimation for SUA"))), 
+           #navlistPanel(widths = c(3,8), 
+           tabsetPanel("Production",
                        tabPanel("Production",
-                            h3(textOutput("Production")),
-                            rHandsontableOutput("tableProduction")
+                                h3(textOutput("Production")),
+                                rHandsontableOutput("tableProduction")
                        ),
                        
                        tabPanel("Trade",
-                            h3("Import and Export Data")
-                            
+                                h3("Import and Export Data")
+                                
                        ),
                        
                        tabPanel("Stocks",
-                            h3(textOutput("Stocks")),
-                            rHandsontableOutput("tableStocks")
+                                h3(textOutput("Stocks")),
+                                rHandsontableOutput("tableStocks")
                        ),
                        
                        tabPanel("Food",
@@ -171,11 +161,12 @@ shinyUI(
                        tabPanel("Tourist Consumption",
                                 h3(textOutput("tableTourist Consumption")),
                                 rHandsontableOutput("tableTC")
-                       )
+                       ) )
+                      
                        
                        
-                )
-            )     )
+                       
+         
   ),
   
   tabPanel(title= "Help"),

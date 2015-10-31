@@ -5,7 +5,7 @@ library(rhandsontable)
 
 # Load data
 
-data <- fread("testData.csv")
+data <- fread("Data/testData.csv")
 
 ## TODO (marcogarieri): Is this line of code needed? 
 ##                      Anyway geographicArea is not present, but Geographic Area.
