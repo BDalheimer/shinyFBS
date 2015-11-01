@@ -1,35 +1,3 @@
-library(shiny)
-library(reshape2)
-library(data.table)
-library(rhandsontable)
-
-
-## TODO (marcogarieri): There is no need to reload the data
-##                      I commented it, and it still runs 
-
-## bernhard: Are you sure? It doesn't work on my end... I don't like it like this either, takes twice as long. I will
-##           dig into passing sessions in the server output.
-
-# load the data 
-#data <- fread("testData.csv")
-#data <- data[, .(geographicAreaM49, geographicArea, measuredItemCPC, Item, measuredElement, Element, timePointYears, 
-#             Year, Value, Status, Method)]
-
-#dataSUA <- data[, .(geographicArea, timePointYears, Item, Element, Value)]
-## Create list with SUA Elements Trade Missing!!!
-#elementsSua <- c("Production [t]", "Seed [t]", "Loss [t]",  "Waste [t]", "Feed [t]", "Processed [t]", "Other Util [t]",
-#                 "Stocks [#]")
-#suaLong <- dataSUA[dataSUA$Element %in% elementsSua,] 
-
-#sua <- dcast.data.table(suaLong, geographicArea + timePointYears + Item ~ Element, value.var="Value")
-
-
-
-# empty data sets for the modules
-
-
-
-# Create the interface
 shinyUI(
     #fileInput('data')
 
@@ -119,9 +87,10 @@ shinyUI(
            tabsetPanel("FBS and SUA",
                        tabPanel("Production",
                        fluidRow(column(4,h1(textOutput("Production")) ),
-                                column(2, actionButton("productionEst","Estimate Data ", styleclass="primary", block=T)),
+                                column(2, actionButton("productionEst","Estimate Data ", align = 'center', styleclass="primary", block=T)),
+                                tags$style(type='text/css', "productionEst { vertical-align: bottom; }"),
                                 column(2, actionButton("productionSave", "Save Production Data", styleclass="primary",block =T)),         
-                                column(2, actionButton("vizualize", "Vizualize", styleclass="primary",block =T)),
+                                column(2, actionButton("visualize", "Visualize", styleclass="primary",block =T)),
                                 column(2, actionButton("upload", "Upload File", styleclass="primary",block =T))),
           
                                 rHandsontableOutput("tableProduction")
