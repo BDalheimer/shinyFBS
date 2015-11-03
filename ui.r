@@ -86,13 +86,16 @@ shinyUI(
            #navlistPanel(widths = c(3,8), 
            tabsetPanel("FBS and SUA",
                        tabPanel("Production",
-                       fluidRow(column(4,h1(textOutput("Production")) ),
+                       fluidRow(column(4, h1(textOutput("Production"))),
                                 column(2, actionButton("productionEst","Estimate Data ", align = 'center', styleclass="primary", block=T)),
-                                tags$style(type='text/css', "productionEst { vertical-align: bottom; }"),
                                 column(2, actionButton("productionSave", "Save Production Data", styleclass="primary",block =T)),         
                                 column(2, actionButton("visualize", "Visualize", styleclass="primary",block =T)),
-                                column(2, actionButton("upload", "Upload File", styleclass="primary",block =T))),
-          
+                                column(2, actionButton("upload", "Upload File", styleclass="primary",block =T))
+                                ),
+                       tags$style(type='text/css', "#productionEst { width:100%; margin-top: 25px;}"),
+                       tags$style(type='text/css', "#productionSave { width:100%; margin-top: 25px;}"),
+                       tags$style(type='text/css', "#visualize { width:100%; margin-top: 25px;}"),
+                       tags$style(type='text/css', "#upload { width:100%; margin-top: 25px;}"), br(),
                                 rHandsontableOutput("tableProduction")
                        ),
                        
