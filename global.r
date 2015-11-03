@@ -2,6 +2,7 @@ library(shiny)
 library(data.table)
 library(reshape2)
 library(rhandsontable)
+library(shinysky)
 
 data <- fread("Data/testData.csv")
 
@@ -25,6 +26,16 @@ sua <- dcast.data.table(suaLong, geographicArea + timePointYears + Item ~ Elemen
 suaElementNames <- c("Production", "Import", "Export", "Stocks", "Feed Use", "Food Use", "Seed", "Food Losses & Waste", 
                      "Tourist Consumption", "Industrial Use")
 
+
+productionElements = c(5510, 55100, 55101, 5515)
+
+feedElements = c(5520)
+
+seedElements = c(5520)
+
+otherElements = c(5153)
+
+
 ## create empty datasets for each sua element, which will be filled by user or R module
 emptyData <- data.frame(Commodity = unique(data$Item), ExpectedValue = rep(0, length(unique(data$Item))),
                         UpperBound = rep(0, length(unique(data$Item))), 
@@ -32,7 +43,12 @@ emptyData <- data.frame(Commodity = unique(data$Item), ExpectedValue = rep(0, le
                         stringsAsFactors = FALSE, row.names = unique(data$measuredItemCPC))
 
 
+
 for(i in suaElementNames){
   (assign(paste0(i), emptyData))
   
 }
+setkey(data)
+
+
+
