@@ -96,7 +96,7 @@ shinyUI(
                        tags$style(type='text/css', "#productionSave { width:100%; margin-top: 25px;}"),
                        tags$style(type='text/css', "#visualize { width:100%; margin-top: 25px;}"),
                        tags$style(type='text/css', "#upload { width:100%; margin-top: 25px;}"), br(),
-                                rHandsontableOutput("tableProduction")
+                       rHandsontableOutput("tableProduction")
                        ),
                        
                        tabPanel("Trade",
