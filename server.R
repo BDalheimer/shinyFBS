@@ -50,14 +50,18 @@ for( x in suaElementNames) {local({
 })
 }
 
-output$test = renderRHandsontable(rhandsontable(get(suaElementNames[1]), useTypes = F))
+
+for(i in suaElementTable[, measuredElement]) {
+  assign(paste(suaElementTable[measuredElement == i, Element]), makeWideSuaDataTables(i)$returnSuaTable)
+  assign(paste(suaElementTable[measuredElement == i, Element], "RowNames", sep =""), makeWideSuaDataTables(i)$returnRowNames)
+}
+
 
 # input/output tables for SUA elemnts 
 for(x in suaElementNames) {local({
   i = x
   output[[paste("table",i, sep="")]] = renderRHandsontable({
     rhandsontable(get(i), useTypes = F, rowHeaders = get(paste(i, "RowNames", sep=""))) %>%
-      #hot_col("measuredItemCPC") = NULL %>%
       hot_cols(colWidths = 200) %>%
       hot_rows(rowHeights = 20) %>%
       hot_cols(fixedColumnsLeft = 1) %>%

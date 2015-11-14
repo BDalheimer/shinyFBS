@@ -30,10 +30,7 @@ suaElementCodes = c(5510, 5610, 5910, 5071, 5141, 5520, 5525, 5015, 5164, 5165, 
 
 suaElementTable = data.table(measuredElement = suaElementCodes, Element = suaElementNames)
 
-for(i in suaElementTable[, measuredElement]) {
-  assign(paste(suaElementTable[measuredElement == i, Element]), makeWideSuaDataTables()$returnSuaTable)
-  assign(paste(suaElementTable[measuredElement == i, Element], "RowNames", sep =""), makeWideSuaDataTables()$returnRowNames)
-}
+
 
 setkey(data)
 

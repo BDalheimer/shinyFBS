@@ -1,6 +1,6 @@
 # This function creates wide data tables for each sua element to be rendered in rhandsontable for sua  data input/output
 
-makeWideSuaDataTables = function(){
+makeWideSuaDataTables = function(i){
   
   # For those that already have data, return table with available data
   if(nrow(data[measuredElement == i, ]) != 0) {
