@@ -78,13 +78,32 @@ shinyUI(
   
   #Compiler Page
   tabPanel(title= "Compile SUA and FBS",
-           fluidRow(column(width = 3,selectInput("FBSSUAyear", 
-                                                 "Year:", 
-          c(unique(sua$timePointYears[sua$timePointYears > 2012]), #we'll only create new FBS
-          as.character(as.numeric(max(sua$timePointYears[sua$timePointYears > 2012]))+ 1))
-           ), widths = c(4,1)), column(width = 9, h1("Data Collection and Estimation for SUA"))), 
+           fluidRow(h1("Data Collection and Estimation for SUA")), 
            #navlistPanel(widths = c(3,8), 
            tabsetPanel("FBS and SUA",
+                       tabPanel("Start",
+                                fluidRow(column(width = 10, h3("Please select Country and Year")
+                                                ),
+                                         column(width = 2, actionButton("startContinue", "Start Compilation!", align = 'center', styleclass = "success")
+                                                )
+                                         ),
+                                tags$style(type='text/css', "#startContinue { width:100%; margin-top: 25px;}"),
+                                br(),
+                                fluidRow(
+                                column(width = 3, selectInput("FBSSUAarea", 
+                                                                      "Area:", 
+                                                                      unique(sua$geographicArea)) 
+                                ),
+                                column(width = 3, selectInput("FBSSUAyear", 
+                                                                       "Year:", 
+                                                                       c(unique(sua$timePointYears[sua$timePointYears > 2012]), #we'll only create new FBS
+                                                                         as.character(as.numeric(max(sua$timePointYears[sua$timePointYears > 2012]))+ 1))
+                                                                        )
+                                )#,
+                                #column(width = 3,actionButton("startContinue", "Start Compilation!", align = 'center', styleclass = "success"))
+                                )
+                                ),
+  
                        tabPanel("Production",
                        fluidRow(column(4, h1(textOutput("Production"))),
                                 column(2, actionButton("productionEst","Estimate Data ", align = 'center', styleclass="primary", block=T)),
