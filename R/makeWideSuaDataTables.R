@@ -1,20 +1,36 @@
+# This function creates wide data tables for each sua element to be rendered in rhandsontable for sua  data input/output
+
 makeWideSuaDataTables = function(){
   
-  for(i in suaElementTable[, measuredElement]) {
+  # For those that already have data, return table with available data
   if(nrow(data[measuredElement == i, ]) != 0) {
-    table = dcast.data.table(data[measuredElement == i, ], measuredItemCPC + Item ~ timePointYears, value.var = "Value")
-    setkey(table, measuredItemCPC, Item)
-    assign(paste(suaElementTable[measuredElement == i, Element], "RowNames", sep =""), table[, measuredItemCPC])
-    table[, measuredItemCPC := NULL] 
-    assign(paste(suaElementTable[measuredElement == i, Element]), table) 
+    # reshape existing data
+    wideSuaTable = dcast.data.table(data[measuredElement == i, ], 
+                                    measuredItemCPC + Item ~ timePointYears, value.var = "Value")
     
-  }else{
+    setkey(wideSuaTable, measuredItemCPC, Item)
+    # set up cpc codes for rownmaes
+    returnRowNames = wideSuaTable[, measuredItemCPC]
+    # remove cpc codes from table
+    returnSuaTable = wideSuaTable[, measuredItemCPC := NULL] 
     
-    table = data.table(cbind(unique(data$Item), matrix(ncol = 25, nrow = length(unique(data$Item)))))
-    setnames(table, c("Item" ,paste0( 1989:2013)))
-    assign(paste(suaElementTable[measuredElement == i, Element], "RowNames", sep =""), unique(data$measuredItemCPC))
-    assign(paste(suaElementTable[measuredElement == i, Element]), table) 
+  }else{# For those that do not have data, return empty data
+    
+    # create empty data table covering the whole time period
+    wideSuaTable = data.table(cbind(unique(data$Item), 
+                                    matrix(ncol = length(min(data[, timePointYears]):max(data[, timePointYears])), 
+                                           nrow = length(unique(data$Item)))))
+   
+    setnames(wideSuaTable, c("Item" ,paste0( min(data[, timePointYears]):max(data[, timePointYears]))))
+    # set up cpc codes for rownmaes
+    returnRowNames = unique(data$measuredItemCPC)
+    # remove cpc codes from table
+    returnSuaTable = wideSuaTable[, measuredItemCPC := NULL]   
     
   }
-  } 
+  # wrap up outputs in list (table and corresponding cpc codes to be used as rownames in rhandsontable)
+  returnObjects = list(returnSuaTable = returnSuaTable, returnRowNames = returnRowNames)
+
+  returnObjects
 }
+
