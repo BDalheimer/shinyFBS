@@ -78,9 +78,30 @@ shinyUI(
   
   #Compiler Page
   tabPanel(title= "Compile SUA and FBS",
-           fluidRow(h1("Data Collection and Estimation for SUA")), 
-           #navlistPanel(widths = c(3,8), 
-           tabsetPanel("FBS and SUA",
+           
+           fluidPage( 
+           fluidRow(h1("Data Collection and Estimation for SUA")),
+           
+           tags$head(tags$script("
+                        window.onload = function() {
+                                 $('#suaNavlist a:contains(\"Production\")').parent().addClass('disabled');
+                                 $('#suaNavlist a:contains(\"Trade\")').parent().addClass('disabled');
+                                 $('#suaNavlist a:contains(\"Stocks\")').parent().addClass('disabled');
+                                 $('#suaNavlist a:contains(\"Food\")').parent().addClass('disabled');
+                                 $('#suaNavlist a:contains(\"Feed\")').parent().addClass('disabled');
+                                 $('#suaNavlist a:contains(\"Seed\")').parent().addClass('disabled');
+                                 $('#suaNavlist a:contains(\"Food Losses & Waste\")').parent().addClass('disabled');
+                                 $('#suaNavlist a:contains(\"Industrial Use\")').parent().addClass('disabled');
+                                 $('#suaNavlist a:contains(\"Tourist Consumption\")').parent().addClass('disabled');
+                                 $('#suaNavlist a:contains(\"Save All\")').parent().addClass('disabled');
+                                 $('#suaNavlist a:contains(\"Clear All\")').parent().addClass('disabled');
+                                 };
+                                 
+                                 Shiny.addCustomMessageHandler('activeNavs', function(nav_label) {
+                                 $('#suaNavlist a:contains(\"' + nav_label + '\")').parent().removeClass('disabled');
+                                 });
+                                 ")),
+           tabsetPanel("FBS and SUA", selected = 'Start', id = "suaNavlist",
                        tabPanel("Start",
                                 fluidRow(column(width = 10, h3("Please select Country and Year")
                                                 ),
@@ -119,48 +140,49 @@ shinyUI(
                        ),
                        
                        tabPanel("Trade",
-                                h3("Import and Export Data")
+                                h3("Import and Export Data"), actionButton("tradeSave", "Save and Continue", styleclass = 'success')
                                 
                        ),
                        
-                       tabPanel("Stocks",
-                                h3(textOutput("Stocks")),
+                       tabPanel("Stocks", 
+                       fluidRow(h3(textOutput("Stocks")), actionButton("stocksSave", "Save and Continue", styleclass = 'success')),
                                 rHandsontableOutput("tableStocks")
                        ),
                        
                        tabPanel("Food",
-                                h3(textOutput("Food Use")),
+                                fluidRow(fluidRow(h3(textOutput("Food Use")), actionButton("foodSave", "Save and Continue", styleclass = 'success'))),
                                 rHandsontableOutput("tableFood Use")
                                 
                        ),
                        
-                       tabPanel("Feed",
-                                h3(textOutput("Feed Use")),
+                       tabPanel("Feed", 
+                                fluidRow(h3(textOutput("Feed Use")), actionButton("feedSave", "Save and Continue", styleclass = 'success')),
                                 rHandsontableOutput("tableFeed Use")
                        ),
                        
-                       tabPanel("Seed",
-                                h3(textOutput("Seed")),
+                       tabPanel("Seed", 
+                                fluidRow(h3(textOutput("Seed")), actionButton("seedSave", "Save and Continue", styleclass = 'success')),
                                 rHandsontableOutput("tableSeed")
                        ),
                        
-                       tabPanel("Food Losses & Waste",
-                                h3(textOutput("Food Losses & Waste")),
+                       tabPanel("Food Losses & Waste", 
+                                fluidRow(h3(textOutput("Food Losses & Waste")), actionButton("flwSave", "Save and Continue", styleclass = 'success')),
                                 rHandsontableOutput("tableFood Losses & Waste")
                        ),
                        
-                       tabPanel("Industrial Use",
-                                h3(textOutput("Industrial Use")),
+                       tabPanel("Industrial Use", 
+                                fluidRow(h3(textOutput("Industrial Use")), actionButton("industrialSave", "Save and Continue", styleclass = 'success')),
                                 rHandsontableOutput("tableIndustrial Use")
                        ),
                        
-                       tabPanel("Tourist Consumption",
-                                h3(textOutput("tableTourist Consumption")),
+                       tabPanel("Tourist Consumption", 
+                                fluidRow(h3(textOutput("tableTourist Consumption")), actionButton("touristSave", "Save and Continue", styleclass = 'success')),
                                 rHandsontableOutput("tableTC")
                        ),
                        
-                       tabPanel("Save All"),
+                       tabPanel("Save All", actionButton("saveSave", "Save and Continue", styleclass = 'success')),
                        tabPanel("Clear All")
+                       
                        
                                 
                        
@@ -173,7 +195,7 @@ shinyUI(
                        
                        
          
-  ),
+  )),
   
   tabPanel(title= "Help"),
   ## Orangbook here
