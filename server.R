@@ -133,10 +133,18 @@ observe({
 })
 
 observe({
-  if (input$saveSave > 0) {
-    session$sendCustomMessage('activeNavs', 'Clear All')
-    updateTabsetPanel(session, "suaNavlist", selected = "Clear All")
+  if (input$touristSave > 0) {
+    session$sendCustomMessage('activeNavs', 'Residual Other Uses')
+    updateTabsetPanel(session, "suaNavlist", selected = "Residual Other Uses")
   }
 })
+
+observe({
+  if (input$residualSave > 0) {
+    session$sendCustomMessage('activeNavs', 'Save All')
+    updateTabsetPanel(session, "suaNavlist", selected = "Save All")
+  }
+})
+
 
 })
