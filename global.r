@@ -4,10 +4,6 @@ library(reshape2)
 library(rhandsontable)
 library(shinysky)
 source('R/makeWideSuaDataTables.R')
-selectBrowseData = source('R/selectBrowseData.R')
-selectizeBrowseData = source('R/selectizeBrowseData.R')
-browseSUA  = source('R/browseSUA.R')
-
 
 data <- fread("Data/testData.csv")
 data[, measuredItemCPC := as.character(measuredItemCPC)]
@@ -36,7 +32,7 @@ suaElementCodes = c(5510, 5610, 5910, 5071, 5141, 5520, 5525, 5015, 5164, 5165, 
 suaElementTable = data.table(measuredElement = suaElementCodes, Element = suaElementNames)
 
 
-
 setkey(data)
-
-
+selectBrowseData = source('R/selectBrowseData.R')
+selectizeBrowseData = source('R/selectizeBrowseData.R')
+browseSUA  = source('R/browseSUA.R')
