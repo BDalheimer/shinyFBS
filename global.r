@@ -4,8 +4,13 @@ library(reshape2)
 library(rhandsontable)
 library(shinysky)
 source('R/makeWideSuaDataTables.R')
-data <- fread("Data/testData.csv")
+selectBrowseData = source('R/selectBrowseData.R')
+selectizeBrowseData = source('R/selectizeBrowseData.R')
+browseSUA  = source('R/browseSUA.R')
 
+
+data <- fread("Data/testData.csv")
+data[, measuredItemCPC := as.character(measuredItemCPC)]
 data <- data[, .(geographicAreaM49, geographicArea, measuredItemCPC, Item, 
                  measuredElement, Element, timePointYears, Year, Value, Status, Method)]
 

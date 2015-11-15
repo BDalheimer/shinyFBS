@@ -5,14 +5,17 @@ shinyServer(function(input, output, session) {
   # selections filters for Browse Data Page
   output$tableData <- renderDataTable({ 
     
-    if (input$dataGeographicArea != "All"){
-      data = data[data$geographicArea %in% input$dataGeographicArea,]
+    if (input$dataGeographicArea != "All" ){
+      data = data[data$geographicAreaM49 %in% c(tstrsplit(input$dataGeographicArea, " | ")[1], 
+                                                tstrsplit(input$M49GeographicArea, " | ")[1]),]
+                                                
     }
-    if (input$dataElement != "All"){
-      data = data[data$Element %in% input$dataElement,]
+    if (input$dataElement != "All" ){
+      data = data[data$measuredElement %in% c(tstrsplit(input$dataElement, " | ")[1],
+                  tstrsplit(input$codeElement, " | ")[1]),]
     }
     if (input$dataItem != "All"){
-      data = data[data$Item %in% input$dataItem,]
+      data = data[data$measuredItemCPC %in% tstrsplit(input$dataItem, " | ")[1],]
     }
     if (input$dataTimePointYears != "All"){
       data = data[data$timePointYears %in% input$dataTimePointYears,]

@@ -7,35 +7,11 @@ shinyUI(
       
     
     # Browse Data Page: Selection area
-    fluidRow(
-      column(3, 
-             selectInput("dataGeographicArea", 
-                         "Geographic Area:", 
-                         c("All", 
-                           unique(as.character(data$geographicArea))), multiple=T, selectize=F)
-      ),
-      column(3, 
-             selectInput("dataElement", 
-                         "Element:", 
-                         c("All", 
-                           unique(as.character(data$Element))), multiple=T, selectize=F)
-      ),
-      column(3, 
-             selectInput("dataItem", 
-                         "Item:", 
-                         c("All", 
-                           unique(as.character(data$Item))), multiple=T, selectize=F)
-      ),
-      
-    column(3, 
-           selectInput("dataTimePointYears", 
-                       "Years:", 
-                       c("All", 
-                         unique(as.character(data$timePointYears))), multiple=T, selectize=F)
-    )   
-      
-      
-    ),
+    selectBrowseData$value,
+    
+    selectizeBrowseData$value, 
+    
+    
     # Table Output.
     fluidRow(
       dataTableOutput(outputId="tableData")
@@ -47,33 +23,13 @@ shinyUI(
   
   # Page for SUA tables
   tabPanel(title= "SUA", "Supply and Utilization Accounts",
-           fluidRow(
-             column(3, 
-                    selectInput("SUAgeographicArea", 
-                                "Geographic Area:", 
-                                c("All", 
-                                  unique(as.character(sua$geographicArea))), multiple=T, selectize=F)
-             ),
-             column(3, 
-                    selectInput("SUAItem", 
-                                "Item:", 
-                                c("All", 
-                                  unique(as.character(sua$Item))), multiple=T, selectize=F)
-             ),
-             
-             column(3, 
-                    selectInput("SUAtimePointYears", 
-                                "Years:", 
-                                c("All", 
-                                  unique(as.character(sua$timePointYears))), multiple=T, selectize=F)
-             )
-           ), # Output SUA.
+           browseSUA$value, 
+           
+           # Output SUA.
               fluidRow(
               dataTableOutput(outputId="tableSUA")
-           )
-           
-           
-           ),
+              )
+  ),
   
   
   #Compiler Page
@@ -109,8 +65,8 @@ shinyUI(
                        tabPanel("Production",
                        fluidRow(column(4, h3(textOutput("Production"))),
                                 column(2, actionButton("productionEst","Estimate Data ", align = 'center', styleclass="primary", block=T)),
-                                column(2, actionButton("upload", "Upload File", styleclass="primary",block =T)),       
-                                column(2, actionButton("visualize", "Visualize", styleclass="primary",block =T)),
+                                column(2, actionButton("upload", "Upload File", styleclass="warning",block =T)),       
+                                column(2, actionButton("visualize", "Visualize", styleclass="danger",block =T)),
                                 column(2, actionButton("productionSave", "Save Production Data", styleclass="success",block =T)) 
                                 ),
                        tags$style(type='text/css', "#productionEst { width:100%; margin-top: 15px; margin-bottom: 15px;}"),
