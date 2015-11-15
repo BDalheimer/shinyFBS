@@ -6,13 +6,17 @@ shinyServer(function(input, output, session) {
   output$tableData <- renderDataTable({ 
     
     if (input$dataGeographicArea != "All" ){
-      data = data[data$geographicAreaM49 %in% c(tstrsplit(input$dataGeographicArea, " | ")[1], 
-                                                tstrsplit(input$M49GeographicArea, " | ")[1]),]
+      data = data[geographicAreaM49 %in% c(tstrsplit(input$dataGeographicArea, " | ")[1],
+                                           tstrsplit(input$M49GeographicArea, " | ")[1]),]
                                                 
+      
     }
     if (input$dataElement != "All" ){
       data = data[data$measuredElement %in% c(tstrsplit(input$dataElement, " | ")[1],
-                  tstrsplit(input$codeElement, " | ")[1]),]
+                                              tstrsplit(input$codeElement, " | ")[1]),]
+        
+                  
+      
     }
     if (input$dataItem != "All"){
       data = data[data$measuredItemCPC %in% tstrsplit(input$dataItem, " | ")[1],]

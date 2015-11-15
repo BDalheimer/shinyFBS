@@ -1,10 +1,10 @@
 fluidRow(
   column(3, 
-        selectInput(
+        selectizeInput(
           "M49GeographicArea", 
           "Enter Area:", 
-          c("All", apply(unique(data[, .(geographicAreaM49, geographicArea)]), 1, paste, collapse= " | ")), 
-          multiple = TRUE, selectize = F)
+          choices = apply(unique(data[, .(geographicAreaM49, geographicArea)]), 1, paste, collapse= " | "), 
+          multiple = TRUE)
 ), 
 
 column(3, 
