@@ -5,28 +5,54 @@ shinyServer(function(input, output, session) {
   # selections filters for Browse Data Page
   output$tableData <- renderDataTable({ 
     
-    if (input$dataGeographicArea != "All" ){
-      data = data[geographicAreaM49 %in% c(tstrsplit(input$dataGeographicArea, " | ")[1],
-                                           tstrsplit(input$M49GeographicArea, " | ")[1]),]
+    if (input$selectGeographicArea != "All" ){
+      data = data[geographicAreaM49 %in% tstrsplit(input$selectGeographicArea, " | ")[1],]
+                                           
                                                 
       
     }
-    if (input$dataElement != "All" ){
-      data = data[data$measuredElement %in% c(tstrsplit(input$dataElement, " | ")[1],
-                                              tstrsplit(input$codeElement, " | ")[1]),]
+    if (input$selectElement != "All" ){
+      data = data[measuredElement %in% tstrsplit(input$selectElement, " | ")[1],]
+                                              
         
-                  
-      
+
     }
-    if (input$dataItem != "All"){
-      data = data[data$measuredItemCPC %in% tstrsplit(input$dataItem, " | ")[1],]
+    if (input$selectItem != "All"){
+      data = data[data$measuredItemCPC %in% tstrsplit(input$selectItem, " | ")[1],]
     }
-    if (input$dataTimePointYears != "All"){
-      data = data[data$timePointYears %in% input$dataTimePointYears,]
+    if (input$selectTimePointYears != "All"){
+      data = data[data$timePointYears %in% input$selectTimePointYears,]
     }
     
     data
   })
+  # Use both inputs for each dimension
+  observeEvent(input$selectizeGeographicArea, {
+    if(!is.null(input$selectizeGeographicArea)){
+        updateSelectInput(session, "selectGeographicArea", 
+                          selected = c(input$selectGeographicArea, input$selectizeGeographicArea))
+    }
+  })
+  
+  observeEvent(input$selectizeElement, {
+    if(!is.null(input$selectizeElement)){
+      updateSelectInput(session, "selectElement", 
+                        selected = c(input$selectElement, input$selectizeElement))
+    }
+  })
+  
+  observeEvent(input$selectizeItem, {
+    if(!is.null(input$selectizeItem)){
+      updateSelectInput(session, "selectItem", 
+                        selected = c(input$selectItem, input$selectizeItem))
+    }
+  })
+  observeEvent(input$selectizeTimePointYears, {
+    if(!is.null(input$selectizeTimePointYears)){
+      updateSelectInput(session, "selectTimePointYears", 
+                        selected = c(input$selectTimePointYears, input$selectizeTimePointYears))
+    }
+  }) 
   
 ## Selection filter for SUA page
 output$tableSUA = renderDataTable({

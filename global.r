@@ -8,6 +8,7 @@ source('R/makeWideSuaDataTables.R')
 suaELementTable = readRDS("Data/suaElementTable.rda")
 data = readRDS("Data/testData.rda")
 data[, measuredItemCPC := as.character(measuredItemCPC)]
+
 data <- data[, .(geographicAreaM49, geographicArea, measuredItemCPC, Item, 
                  measuredElement, Element, timePointYears, Year, Value, Status, Method)]
 
