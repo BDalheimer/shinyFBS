@@ -14,7 +14,7 @@ shinyUI(
     
     # Table Output.
     fluidRow(
-      dataTableOutput(outputId="tableData")
+      dataTableOutput(outputId = "tableData")
     ) 
   ),
   

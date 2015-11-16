@@ -3,7 +3,7 @@ shinyServer(function(input, output, session) {
   
   
   # selections filters for Browse Data Page
-  output$tableData <- renderDataTable({ 
+  mydata = reactive({
     
     if (input$selectGeographicArea != "All" ){
       data = data[data$geographicAreaM49 %in% unlist(tstrsplit(input$selectGeographicArea, " | ")[1]),]
@@ -18,9 +18,24 @@ shinyServer(function(input, output, session) {
       data = data[data$timePointYears %in% input$selectTimePointYears,]
     }
     
-    data
-    
+    switch(data) 
   })
+    
+  
+  
+    output$tableData = renderDataTable({     
+    mydata()
+  })
+  
+
+  
+  output$exportBrowse = downloadHandler(
+    filename = function() {paste('shinyFBS', Sys.Date(), '.csv', sep='') },
+    content = function(file) {
+    
+      write.csv(input$tableData, file, row.names = F)
+    }
+  )
   
   # Use both inputs for each dimension
   observeEvent(input$selectizeGeographicArea, {
@@ -92,10 +107,10 @@ for(x in suaElementNames) {local({
   i = x
   output[[paste("table",i, sep="")]] = renderRHandsontable({
     rhandsontable(get(i), useTypes = F, rowHeaders = get(paste(i, "RowNames", sep=""))) %>%
-      hot_cols(colWidths = 200) %>%
+      hot_cols(colWidths = 100) %>%
       hot_rows(rowHeights = 20) %>%
       hot_cols(fixedColumnsLeft = 1) %>%
-      hot_col("Item", readOnly = TRUE, colWidths = 600)
+      hot_col("Item", readOnly = TRUE, colWidths = 300)
       
     
   })
