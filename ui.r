@@ -38,7 +38,7 @@ shinyUI(
            fluidPage( 
            fluidRow(h1("Data Collection and Estimation for SUA")),
            
-           tags$head(tags$script(includeCSS("css/sequentiallyActiveTabs.css"))),
+           tags$head(tags$script(includeCSS("www/sequentiallyActiveTabs.css"))),
            
            tabsetPanel("FBS and SUA", selected = 'Start', id = "suaNavlist",
                        tabPanel("Start",
