@@ -4,7 +4,7 @@ fluidRow(
           "selectizeGeographicArea", 
           "Enter Area:", 
           choices = apply(unique(data[, .(geographicAreaM49, geographicArea)]), 1, paste, collapse= " | "), 
-          multiple = TRUE)
+          multiple = T)
 ), 
 
 column(3, 
@@ -12,20 +12,20 @@ column(3,
          "selectizeElement", 
          "Enter Elements:", 
          choices = apply(unique(data[, .(measuredElement, Element)]), 1, paste, collapse= " | "), 
-         multiple = TRUE)
+         multiple = T)
 ),
-column(4, 
+column(3, 
        selectizeInput(
          "selectizeItem", 
          "Enter Items:", 
          choices = apply(unique(data[, .(measuredItemCPC, Item)]), 1, paste, collapse= " | "), 
-         multiple = TRUE)
+         multiple = T)
 ),
 column(2, 
        selectizeInput(
          "selectizeTimePointYears", 
          "Enter Years:", 
          choices = unique(data[, timePointYears]), 
-         multiple = TRUE)
+         multiple = T)
 )
 )

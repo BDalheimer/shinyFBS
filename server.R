@@ -6,31 +6,27 @@ shinyServer(function(input, output, session) {
   output$tableData <- renderDataTable({ 
     
     if (input$selectGeographicArea != "All" ){
-      data = data[geographicAreaM49 %in% tstrsplit(input$selectGeographicArea, " | ")[1],]
-                                           
-                                                
-      
+      data = data[data$geographicAreaM49 %in% unlist(tstrsplit(input$selectGeographicArea, " | ")[1]),]
     }
     if (input$selectElement != "All" ){
-      data = data[measuredElement %in% tstrsplit(input$selectElement, " | ")[1],]
-                                              
-        
-
+      data = data[data$measuredElement %in% unlist(tstrsplit(input$selectElement, " | ")[1]),]
     }
     if (input$selectItem != "All"){
-      data = data[data$measuredItemCPC %in% tstrsplit(input$selectItem, " | ")[1],]
+      data = data[data$measuredItemCPC %in% unlist(tstrsplit(input$selectItem, " | ")[1]),]
     }
     if (input$selectTimePointYears != "All"){
       data = data[data$timePointYears %in% input$selectTimePointYears,]
     }
     
     data
+    
   })
+  
   # Use both inputs for each dimension
   observeEvent(input$selectizeGeographicArea, {
     if(!is.null(input$selectizeGeographicArea)){
-        updateSelectInput(session, "selectGeographicArea", 
-                          selected = c(input$selectGeographicArea, input$selectizeGeographicArea))
+      updateSelectInput(session, "selectGeographicArea", 
+                        selected = c(input$selectGeographicArea, input$selectizeGeographicArea))
     }
   })
   
@@ -53,6 +49,7 @@ shinyServer(function(input, output, session) {
                         selected = c(input$selectTimePointYears, input$selectizeTimePointYears))
     }
   }) 
+  
   
 ## Selection filter for SUA page
 output$tableSUA = renderDataTable({
