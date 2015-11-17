@@ -5,6 +5,7 @@ shinyUI(
  navbarPage("Food Balance Sheet Compiler",
     tabPanel(title ="Browse Data",
       
+    busyIndicator(wait = 115000),
     
     # Browse Data Page: Selection area
     selectBrowseData$value,

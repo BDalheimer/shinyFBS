@@ -3,7 +3,7 @@ shinyServer(function(input, output, session) {
   
   
   # selections filters for Browse Data Page
-  mydata = reactive({
+  output$tableData = renderDataTable({
     
     if (input$selectGeographicArea != "All" ){
       data = data[data$geographicAreaM49 %in% unlist(tstrsplit(input$selectGeographicArea, " | ")[1]),]
@@ -18,24 +18,20 @@ shinyServer(function(input, output, session) {
       data = data[data$timePointYears %in% input$selectTimePointYears,]
     }
     
-    switch(data) 
+    data 
   })
     
-  
-  
-    output$tableData = renderDataTable({     
-    mydata()
-  })
   
 
+
   
-  output$exportBrowse = downloadHandler(
-    filename = function() {paste('shinyFBS', Sys.Date(), '.csv', sep='') },
-    content = function(file) {
-    
-      write.csv(input$tableData, file, row.names = F)
-    }
-  )
+#   output$exportBrowse = downloadHandler(
+#     filename = function() {paste('shinyFBS', Sys.Date(), '.csv', sep='') },
+#     content = function(file) {
+#     
+#       write.csv(input$tableData, file, row.names = F)
+#     }
+#   )
   
   # Use both inputs for each dimension
   observeEvent(input$selectizeGeographicArea, {
