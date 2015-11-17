@@ -3,35 +3,18 @@ shinyServer(function(input, output, session) {
   
   
   # selections filters for Browse Data Page
-  output$tableData = renderDataTable({
+  selectedBrowseTable = selectedBrowseData(input, output, session)
     
-    if (input$selectGeographicArea != "All" ){
-      data = data[data$geographicAreaM49 %in% unlist(tstrsplit(input$selectGeographicArea, " | ")[1]),]
-    }
-    if (input$selectElement != "All" ){
-      data = data[data$measuredElement %in% unlist(tstrsplit(input$selectElement, " | ")[1]),]
-    }
-    if (input$selectItem != "All"){
-      data = data[data$measuredItemCPC %in% unlist(tstrsplit(input$selectItem, " | ")[1]),]
-    }
-    if (input$selectTimePointYears != "All"){
-      data = data[data$timePointYears %in% input$selectTimePointYears,]
-    }
-    
-    data 
-  })
-    
-  
+  output$tableData = renderDataTable({ selectedBrowseTable() })
 
-
-  
-#   output$exportBrowse = downloadHandler(
-#     filename = function() {paste('shinyFBS', Sys.Date(), '.csv', sep='') },
-#     content = function(file) {
-#     
-#       write.csv(input$tableData, file, row.names = F)
-#     }
-#   )
+  # Export csv
+   output$exportBrowse = downloadHandler(
+     filename = function() {paste('shinyFBS', Sys.Date(), '.csv', sep='') },
+     content = function(file) {
+       
+       write.csv(selectedBrowseTable(), file, row.names = F)
+     
+   })
   
   # Use both inputs for each dimension
   observeEvent(input$selectizeGeographicArea, {

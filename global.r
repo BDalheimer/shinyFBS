@@ -4,16 +4,16 @@ library(reshape2)
 library(rhandsontable)
 library(shinysky)
 source('R/makeWideSuaDataTables.R')
-
+source('R/selectedBrowseData.R')
 suaElementTable = readRDS("Data/suaElementTable.rda")
 ## multiple (all) country data
-data = readRDS("Data/data.rda")
+#data = readRDS("Data/data.rda")
 
 ## single country data 
-# data = readRDS("Data/testData.rda")
+ data = readRDS("Data/testData.rda")
 
 # only required for multiple country data (oddly)
-setnames(data, "Geographic Area", "geographicArea")
+#setnames(data, "Geographic Area", "geographicArea")
 setkey(data, geographicAreaM49, measuredItemCPC, measuredElement, timePointYears)
 
 # standardize data formats
