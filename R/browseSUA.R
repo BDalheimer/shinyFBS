@@ -3,7 +3,7 @@ fluidRow(
          selectInput("SUAgeographicArea", 
                      "Geographic Area:", 
                      c("All", 
-                       unique(as.character(sua$geographicArea))), multiple=T, selectize=F)
+                       unique(as.character(sua$geographicArea))), multiple=F, selectize=F)
   ),
   column(3, 
          selectInput("SUAItem", 
@@ -16,6 +16,6 @@ fluidRow(
          selectInput("SUAtimePointYears", 
                      "Years:", 
                      c("All", 
-                       unique(as.character(sua$timePointYears))), multiple=T, selectize=F)
+                       unique(as.character(sua$timePointYears))), multiple=F, selectize=F)
   )
 )
