@@ -53,7 +53,7 @@ shinyUI(
                                 fluidRow(
                                 column(width = 3, selectInput("FBSSUAarea", 
                                                                       "Area:", 
-                                                                      unique(sua$geographicArea)) 
+                                                                      unique(data$geographicArea)) 
                                 ),
                                 column(width = 3, selectInput("FBSSUAyear", 
                                                                        "Year:", 

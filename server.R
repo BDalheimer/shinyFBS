@@ -15,26 +15,8 @@ shinyServer(function(input, output, session) {
    
   
 ## Selection filter for SUA page
-output$tableSUA = renderDataTable({
+output$tableSUA = renderDataTable({ selectedSUAData(input, output, session)})
   
-  if (input$SUAgeographicArea != "All"){
-    sua = sua[sua$geographicArea %in% input$SUAgeographicArea,]
-  }
-
-  if (input$SUAItem != "All"){
-    sua = sua[sua$Item %in% input$SUAItem,]
-  }
-
-  if (input$SUAtimePointYears != "All"){
-    sua = sua[sua$timePointYears %in% input$SUAtimePointYears,]
-  }
-  
-    
-  sua
-  
-})
-
-
 
 # Just some text output which depends on the coosen year, will be used in headers
 for( x in suaElementNames) {local({
@@ -44,19 +26,22 @@ for( x in suaElementNames) {local({
 }
 
 
-#test = reactive({ 
+for(i in suaElementTable[, measuredElement]) { 
   
-for(i in suaElementTable[, measuredElement]) {
+  assign(paste(suaElementTable[measuredElement == i, Element]), 
+         makeWideSuaDataTables(i)$returnSuaTable)
+                                         
   
-  assign(paste(suaElementTable[measuredElement == i, Element]), makeWideSuaDataTables(i)$returnSuaTable)
-  assign(paste(suaElementTable[measuredElement == i, Element], "RowNames", sep =""), makeWideSuaDataTables(i)$returnRowNames)
+  assign(paste(suaElementTable[measuredElement == i, Element], "RowNames", sep =""), 
+         makeWideSuaDataTables(i)$returnRowNames) 
+                                         
 
   }
-#})
+
 
 
 # input/output tables for SUA elemnts 
-for(x in suaElementNames) {local({
+for(x in suaElementTable[, Element]) {local({
   i = x
   output[[paste("table",i, sep="")]] = renderRHandsontable({
     rhandsontable(get(i), useTypes = F, rowHeaders = get(paste(i, "RowNames", sep=""))) %>%

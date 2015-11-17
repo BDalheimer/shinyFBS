@@ -3,16 +3,18 @@
 makeWideSuaDataTables = function(i){
   
   # For those that already have data, return table with available data
+    #data = data[geographicArea == input$FBSSUAarea, ]
   if(nrow(data[measuredElement == i, ]) != 0) {
     # reshape existing data
     wideSuaTable = dcast.data.table(data[measuredElement == i, ], 
                                     measuredItemCPC + Item ~ timePointYears, value.var = "Value")
     
-    setkey(wideSuaTable, measuredItemCPC, Item)
-    # set up cpc codes for rownmaes
+    setkey(wideSuaTable, Item)
+    # save codes for rownmaes
     returnRowNames = wideSuaTable[, measuredItemCPC]
     # remove cpc codes from table
-    returnSuaTable = wideSuaTable[, measuredItemCPC := NULL] 
+    returnSuaTable = wideSuaTable[ , measuredItemCPC := NULL] 
+    
     
   }else{# For those that do not have data, return empty data
     
@@ -26,11 +28,13 @@ makeWideSuaDataTables = function(i){
     returnRowNames = unique(data$measuredItemCPC)
     # remove cpc codes from table
     returnSuaTable = wideSuaTable[, measuredItemCPC := NULL]   
-    
+    returnSuaTable
   }
   # wrap up outputs in list (table and corresponding cpc codes to be used as rownames in rhandsontable)
   returnObjects = list(returnSuaTable = returnSuaTable, returnRowNames = returnRowNames)
 
   returnObjects
 }
+
+
 

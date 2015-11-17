@@ -7,7 +7,7 @@ source('R/makeWideSuaDataTables.R')
 source('R/selectedBrowseData.R')
 source('R/exportBrowseData.R')
 source('R/combineBrowseInputs.R')
-
+source('R/selectedSUAData.R')
 suaElementTable = readRDS("Data/suaElementTable.rda")
 ## multiple (all) country data
 #data = readRDS("Data/data.rda")
