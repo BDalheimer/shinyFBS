@@ -5,12 +5,15 @@ library(rhandsontable)
 library(shinysky)
 source('R/makeWideSuaDataTables.R')
 source('R/selectedBrowseData.R')
+source('R/exportBrowseData.R')
+source('R/combineBrowseInputs.R')
+
 suaElementTable = readRDS("Data/suaElementTable.rda")
 ## multiple (all) country data
 #data = readRDS("Data/data.rda")
 
 ## single country data 
- data = readRDS("Data/testData.rda")
+data = readRDS("Data/testData.rda")
 
 # only required for multiple country data (oddly)
 #setnames(data, "Geographic Area", "geographicArea")
