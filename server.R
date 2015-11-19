@@ -1,7 +1,5 @@
 shinyServer(function(input, output, session) {
 
-  
-  
   # selections filters for Browse Data Page
   selectedBrowseTable = selectedBrowseData(input, output, session)
     
@@ -19,40 +17,38 @@ output$tableSUA = renderDataTable({ selectedSUAData(input, output, session)})
   
 
 # Just some text output which depends on the coosen year, will be used in headers
-for( x in suaElementNames) {local({
+for( x in suaElementTable[, Element]) {local({
   i = x
   output[[paste(i)]] = renderText({paste(i ,input$FBSSUAyear)})
 })
 }
 
 
-for(i in suaElementTable[, measuredElement]) { 
-  
-  assign(paste(suaElementTable[measuredElement == i, Element]), 
-         makeWideSuaDataTables(i)$returnSuaTable)
-                                         
-  
-  assign(paste(suaElementTable[measuredElement == i, Element], "RowNames", sep =""), 
-         makeWideSuaDataTables(i)$returnRowNames) 
-                                         
 
-  }
+# for(i in suaElementTable[, measuredElement]) {
+#  # i = x
+#   assign(paste(suaElementTable[measuredElement == i, Element]), 
+#          makeWideSuaDataTables(input, output, session, i))
+#   
+#   }
 
-
+individualSUATables = makeWideSuaDataTables(input, output, session)
 
 # input/output tables for SUA elemnts 
 for(x in suaElementTable[, Element]) {local({
   i = x
-  output[[paste("table",i, sep="")]] = renderRHandsontable({
-    rhandsontable(get(i), useTypes = F, rowHeaders = get(paste(i, "RowNames", sep=""))) %>%
+  output[[paste("table", i, sep="")]] = renderRHandsontable({
+    rhandsontable(individualSUATables()[[i]], useTypes = F, rowHeaders = NULL) %>%
       hot_cols(colWidths = 100) %>%
       hot_rows(rowHeights = 20) %>%
-      hot_cols(fixedColumnsLeft = 1) %>%
-      hot_col("Item", readOnly = TRUE, colWidths = 300)
-      
+      hot_cols(fixedColumnsLeft = 2) %>%
+      hot_col("Item", readOnly = TRUE, colWidths = 300)%>%
+      hot_col("measuredItemCPC", readOnly = TRUE, colWidths = 70)%>%
+      hot_table(highlightCol = TRUE, highlightRow = TRUE)
   })
-  })
-}
+})
+}#)
+#}
 
 observe({
   if (input$startContinue > 0) {

@@ -4,8 +4,6 @@ shinyUI(
   #Title  
  navbarPage("Food Balance Sheet Compiler",
     tabPanel(title ="Browse Data",
-      
-    busyIndicator(wait = 115000),
     
     # Browse Data Page: Selection area
     selectBrowseData$value,
@@ -53,7 +51,7 @@ shinyUI(
                                 fluidRow(
                                 column(width = 3, selectInput("FBSSUAarea", 
                                                                       "Area:", 
-                                                                      unique(data$geographicArea)) 
+                                                                      unique(data$geographicArea), selected = unique(data$geographicArea)[1]) 
                                 ),
                                 column(width = 3, selectInput("FBSSUAyear", 
                                                                        "Year:", 
