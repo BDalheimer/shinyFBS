@@ -1,6 +1,7 @@
 library(shiny)
 library(data.table)
 library(rhandsontable)
+library(shinyBS)
 library(shinysky)
 library(shinyBS)
 source('R/makeWideSuaDataTables.R')

@@ -19,11 +19,7 @@ shinyUI(
     #tags$style(type='text/css', "#exportBrowse { width:100%; margin-top: 15px; margin-bottom: 15px;}")
     ),
    
-    
-    
-    
-    
-    
+
     # Table Output.
     fluidRow(
       dataTableOutput(outputId = "tableData")
@@ -85,6 +81,7 @@ shinyUI(
                        tags$style(type='text/css', "#upload { width:100%; margin-top: 15px; margin-bottom: 15px;}"),
                        tags$style(type='text/css', "#visualize { width:100%; margin-top: 15px; margin-bottom: 15px;}"),
                        tags$style(type='text/css', "#productionSave { width:100%; margin-top: 15px; margin-bottom: 15px;}"),
+                       bsModal("modalExample", "Request additional input for estimation here", "productionEst", size = "large"),
                        rHandsontableOutput("tableProduction")
                        ),
                        
