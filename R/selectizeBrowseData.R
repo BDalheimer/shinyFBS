@@ -1,5 +1,5 @@
 fluidRow(
-  column(3, 
+  column(2, 
         selectizeInput(
           "selectizeGeographicArea", 
           "Enter Area:", 

@@ -1,5 +1,5 @@
 fluidRow(
-column(3, 
+column(2, 
        selectInput("selectGeographicArea", 
                    "Select Area:", 
                    c("All", apply(unique(data[, .(geographicAreaM49, geographicArea)]), 1, paste, collapse= " | ")),
@@ -27,13 +27,13 @@ column(2,
                      unique(as.character(data$timePointYears))), multiple=T, selectize=F)
 ),
 
-column(1, 
-       actionButton("browseLong", "Long Format", styleclass = "primary", style = 'font-size:80%'), 
-       br(),
-    downloadButton("exportBrowse", "Export csv")#, styleclass = "primary", style = 'font-size:80%')
-),
-tags$style(type='text/css', "#browseLong { width:100%; margin-top: 25px; margin-bottom: 10px;}")
-#tags$style(type='text/css', "#exportBrowse { width:100%; margin-top: 15px; margin-bottom: 15px;}")
+column(2, 
+        actionButton("browseLong", "Long Format", styleclass = "primary"),# style = 'font-size:80%'), 
+        br(),
+        downloadButton("exportBrowse", "Export csv") #, style = 'font-size:80%')
+)
+# tags$style(type='text/css', "#browseLong { width:100%; margin-top: 25px; margin-bottom: 10px;}")
+# #tags$style(type='text/css', "#exportBrowse { width:100%; margin-top: 15px; margin-bottom: 15px;}")
 
 )
 

@@ -15,7 +15,7 @@ selectedBrowseData = function(input, output, session) {
     data = data[data$timePointYears %in% input$selectTimePointYears,]
   }
   
-  data
+  data[, .(geographicArea, Item, Element, Value, Status, Method)]
   
 })
   
