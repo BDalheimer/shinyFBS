@@ -40,8 +40,6 @@ output$plotProduction = renderPlot({
   
 })
 
-output$range <- renderPrint({ paste0(input$sliderYearRange[1]:input$sliderYearRange[2])  })
-
 })
 
 

@@ -1,9 +1,23 @@
-library(shiny)
-library(data.table)
-library(rhandsontable)
-library(shinyBS)
-library(shinysky)
-library(shinyBS)
+packagesCran = c("shiny", "data.table", "rhandsontable", "shinyBS")
+
+if (length(setdiff(packagesCran, rownames(installed.packages()))) > 0) {
+  install.packages(setdiff(packagesCran, rownames(installed.packages())))  
+}
+lapply(packagesCran, require, character.only = T)
+
+packagesGitHub = data.table(package = "shinysky", path = "AnalytixWare/ShinySky")
+if (length(setdiff(packagesGitHub[, package], rownames(installed.packages()))) > 0) {
+  devtools::install_github(packagesGitHub[!package  %in% rownames(installed.packages()), path])  
+}
+
+lapply(packagesGitHub[, package], require, character.only = T)
+
+#library(shiny)
+#library(data.table)
+#library(rhandsontable)
+#library(shinyBS)
+#library(shinysky)
+
 source('R/makeWideSuaDataTables.R')
 source('R/selectedBrowseData.R')
 source('R/exportBrowseData.R')
