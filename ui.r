@@ -49,41 +49,60 @@ shinyUI(
            tags$head(tags$script(includeCSS("www/sequentiallyActiveTabs.css"))),
            
            tabsetPanel("FBS and SUA", selected = 'Start', id = "suaNavlist",
+                       
                        tabPanel("Start",
-                                fluidRow(column(width = 10, h3("Please select Country and Year")
-                                                ),
-                                         column(width = 2, actionButton("startContinue", "Start Compilation!", align = 'center', styleclass = "success")
-                                                )
-                                         ),
-                                tags$style(type='text/css', "#startContinue { width:100%; margin-top: 15px; margin-bottom: 15px;}"),
-                                br(),
-                                fluidRow(
-                                column(width = 3, selectInput("FBSSUAarea", 
-                                                                      "Area:", 
-                                                                      unique(data$geographicArea), selected = unique(data$geographicArea)[1]) 
-                                ),
-                                column(width = 3, selectInput("FBSSUAyear", 
-                                                                       "Year:", 
-                                                                       c(unique(sua$timePointYears[sua$timePointYears > 2012]), #we'll only create new FBS
-                                                                         as.character(as.numeric(max(sua$timePointYears[sua$timePointYears > 2012]))+ 1))
-                                                                        )
-                                ) )
+                                fluidPage(br(),column(9,h3("Welcome!"), br(), br(),
+                                                        h5("On the following pages, the full supply and
+                                                            utilization accounts (SUA) as well as the
+                                                            Food Balance Sheets (FBS) are constructed. Please
+                                                            choose a country and year on the right side side
+                                                            of this page for which the FBS construction 
+                                                            procedure should be applied. Also, please make
+                                                            sure that you have read the Handbook for FBS. 
+                                                            You will be requested to provide data which you can
+                                                            either input manually or upload through csv files.")
+                                                      # verbatimTextOutput("range")
+                                                      ),
+                                          sidebarPanel(width = 3, position = 'right',
+                                                       h4("Please select:"),
+                                                       selectInput("FBSSUAarea", 
+                                                                    "Area:", 
+                                                       unique(data$geographicArea), selected = unique(data$geographicArea)[1]
+                                                       ),
+                                                       selectizeInput("FBSSUAyear", 
+                                                                   "Year:", 
+                                                                   c(unique(sua$timePointYears[sua$timePointYears > 2012]), #we'll only create new FBS
+                                                                     as.character(as.numeric(max(sua$timePointYears[sua$timePointYears > 2012]))+ 1))
+                                                       ),
+                                                       sliderInput("sliderYearRange", sep ="", label = "Time Range", min = as.numeric(min(unique(data$timePointYears))), 
+                                                                   max = as.numeric(max(unique(data$timePointYears))) + 1 , value = c(2010, 2013)),
+                                                                   helpText("Note: Time Range refers to display", 
+                                                                           "only. It will not influence any estimation"),
+                                                                           
+                                                                   
+                                                       actionButton("startContinue", "Start Compilation!", align = 'center', styleclass = "success", block =T)
+                                                       )
+                                          )
                                 ),
                        
                        tabPanel("Production",
                        fluidRow(column(4, h3(textOutput("Production"))),
                                 column(2, actionButton("productionEst","Estimate Data ", align = 'center', styleclass="primary", block=T)),
                                 column(2, actionButton("upload", "Upload File", styleclass="warning",block =T)),       
-                                column(2, actionButton("visualize", "Visualize", styleclass="danger",block =T)),
+                                column(2, actionButton("productionVisualize", "Visualize", styleclass="danger",block =T)),
                                 column(2, actionButton("productionSave", "Save Production Data", styleclass="success",block =T)) 
                                 ),
                        tags$style(type='text/css', "#productionEst { width:100%; margin-top: 15px; margin-bottom: 15px;}"),
                        tags$style(type='text/css', "#upload { width:100%; margin-top: 15px; margin-bottom: 15px;}"),
-                       tags$style(type='text/css', "#visualize { width:100%; margin-top: 15px; margin-bottom: 15px;}"),
+                       tags$style(type='text/css', "#productionVisualize { width:100%; margin-top: 15px; margin-bottom: 15px;}"),
                        tags$style(type='text/css', "#productionSave { width:100%; margin-top: 15px; margin-bottom: 15px;}"),
-                       bsModal("modalExample", "Request additional input for estimation here", "productionEst", size = "large"),
+                       bsModal("productionEstimation", "Request additional input for estimation here", "productionEst", size = "large"),
+                       bsModal("productionVisual", "Selected Plot", "productionVisualize", size = "large", 
+                               plotOutput("plotProduction")),
                        rHandsontableOutput("tableProduction")
-                       ),
+                               ),
+                       
+                       
                        
                        tabPanel("Trade",
                                 fluidRow(column(width = 10, h3("Import and Export Data")), 
