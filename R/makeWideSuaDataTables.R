@@ -7,11 +7,10 @@ reactive({
   
   #for (i in suaElementTable[, measuredElement]){
   wideTables = lapply(suaElementTable[, measuredElement], function(i){
-  setkey(data, geographicArea, measuredElement)
-
-  suaElementDataOne = data[geographicArea %in% input$FBSSUAarea,]
-  suaElementData = suaElementDataOne[measuredElement %in% paste(i), ]
-  suaElementData = data[J(input$FBSSUAarea, paste(i)), nomatch = 0L]
+  setkey(data, geographicArea, measuredElement, timePointYears)
+  suaElementData = data[J(input$FBSSUAarea, paste(i), 
+                          as.character(input$sliderYearRange[1]:input$sliderYearRange[2])), 
+                        nomatch = 0L]
   setkey(suaElementData, measuredItemCPC, timePointYears) 
  
   if(nrow(suaElementData) != 0) {
@@ -26,10 +25,10 @@ reactive({
     
     # create empty data table covering the whole time period
     wideSuaTable = data.table(cbind(unique(data[, .(measuredItemCPC, Item)]),
-                                    matrix(ncol = length(min(data[, timePointYears]):max(data[, timePointYears])), 
-                                           nrow = length(unique(data$Item)))))
+                                    matrix(ncol = length(input$sliderYearRange[1]:input$sliderYearRange[2])), 
+                                           nrow = length(unique(data$Item))))
    
-    setnames(wideSuaTable, c("measuredItemCPC", "Item" ,paste0( min(data[, timePointYears]):max(data[, timePointYears]))))
+    setnames(wideSuaTable, c("measuredItemCPC", "Item", "Empty", paste0(input$sliderYearRange[1]:input$sliderYearRange[2])))
     setkey(wideSuaTable, measuredItemCPC)
     
   }
