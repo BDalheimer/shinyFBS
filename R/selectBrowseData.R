@@ -1,3 +1,6 @@
+selectBrowseData = function(){
+#ns = NS("selectGeographicArea")
+tagList(  
 fluidRow(
 column(2, 
        selectInput("selectGeographicArea", 
@@ -36,5 +39,5 @@ column(2,
 # #tags$style(type='text/css', "#exportBrowse { width:100%; margin-top: 15px; margin-bottom: 15px;}")
 
 )
-
-
+)
+}

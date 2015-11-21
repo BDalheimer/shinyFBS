@@ -1,4 +1,9 @@
+browseSUA = function(){
+
+  tagList(
 fluidRow(
+  
+  # Create selection filters for SUA tables
   column(3, 
          selectInput("SUAgeographicArea", 
                      "Geographic Area:", 
@@ -18,4 +23,10 @@ fluidRow(
                      c("All", 
                        unique(as.character(sua$timePointYears))), multiple=F, selectize=F)
   )
+),
+# Output Sua table
+fluidRow(
+  dataTableOutput(outputId="tableSUA")
 )
+)
+}

@@ -1,4 +1,7 @@
-fluidRow(
+selectizeBrowseData = function(){
+
+  tagList(
+  fluidRow(
   column(2, 
         selectizeInput(
           "selectizeGeographicArea", 
@@ -29,3 +32,5 @@ column(2,
          multiple = T)
 )
 )
+)
+}
