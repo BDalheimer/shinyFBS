@@ -3,7 +3,12 @@
 selectedBrowseData = function(input, output, session) {
   
   reactive({
-  
+    validate(
+      need(input$selectGeographicArea !="" | 
+             input$selectElement != "" | 
+             input$selectItem != "" |
+             input$selectTimePointYears != "", "Please select Area(s), Element(s) Item(s) and Year(s) to display and Export data"))
+              
   if (input$selectGeographicArea != "All" ){
     data = data[data$geographicAreaM49 %in% unlist(tstrsplit(input$selectGeographicArea, " | ")[1]),]
   }
@@ -16,9 +21,25 @@ selectedBrowseData = function(input, output, session) {
   if (input$selectTimePointYears != "All"){
     data = data[data$timePointYears %in% input$selectTimePointYears,]
   }
+  if(input$browseLong %% 2 == 1){
+    data = data[, -"timePointYears", with = F]
+    data = dcast.data.table(data, geographicArea + geographicAreaM49 + measuredElement + Element +
+                              Item + measuredItemCPC ~ Year, value.var=c("Value", "Status", "Method"))
+  }
+    
+  if (input$showCodes == FALSE){
+  data = data[, -c("geographicAreaM49", "measuredElement", "measuredItemCPC", "timePointYears"), with = F]
+  }
+    
+  if (input$showFlags == FALSE){
+  data = data[, -c(which(like(colnames(data), "^Status"))), with=F]
+  data = data[, -c(which(like(colnames(data), "^Method"))), with=F]
+  }
+    
+    
+  data
   
-  data[, .(geographicArea, Item, Element, Value, Status, Method)]
   
 })
-  
+
 }
