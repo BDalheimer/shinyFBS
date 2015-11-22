@@ -1,3 +1,5 @@
+# This function provides the input filters for the browse sua table
+
 selectBrowseData = function(){
 #ns = NS("selectGeographicArea")
 tagList(  

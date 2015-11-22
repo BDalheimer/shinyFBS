@@ -1,4 +1,6 @@
-browseTableButtons = function(x){
+# This function provides an ui object that provides the browse data table as well as buttons to modify it
+
+browseTableButtons = function(){
 
 tagList(
 fluidRow(column(4),

@@ -1,3 +1,5 @@
+# This function provides the export function on the browse data page
+
 exportBrowseData = function(input, output, session, selectedBrowseTable){
 
 downloadHandler(

@@ -1,3 +1,5 @@
+# This function subsets the data according to selected inputs
+
 selectedBrowseData = function(input, output, session) {
   
   reactive({

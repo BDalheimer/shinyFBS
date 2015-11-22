@@ -5,11 +5,10 @@ shinyUI(
  navbarPage("Food Balance Sheet Compiler",
     tabPanel(title ="Browse Data",
     
-    # Browse Data Page: Selection area
-    #selectBrowseData$value,
-       selectBrowseData(),
-       selectizeBrowseData(), 
-       browseTableButtons()
+    
+       selectBrowseData(),# selection filters
+       selectizeBrowseData(), # selection filters
+       browseTableButtons() # output table and buttons
     
     ),
   

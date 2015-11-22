@@ -1,4 +1,6 @@
-sequenceSUAFBS = function(x){
+# This function provides pages for each sua element with a handsontable on each
+
+sequenceSUAFBS = function(){
 
 tagList(
 fluidPage( 
@@ -18,7 +20,8 @@ fluidPage(
                                                 procedure should be applied. Also, please make
                                                 sure that you have read the Handbook for FBS. 
                                                 You will be requested to provide data which you can
-                                                either input manually or upload through csv files.")
+                                                either input manually or upload through csv files. Some
+                                                more text, descriptions, links, help etc...")
                                              # verbatimTextOutput("range")
                                              ),
                                  sidebarPanel(width = 3, position = 'right',

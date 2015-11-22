@@ -1,3 +1,5 @@
+# This function observes the 'save and continue' buttons and jumps to the next page
+
 observeSequentiallyActive = function(input, output, session){
   
   observe({

@@ -1,3 +1,5 @@
+# This function subsets the browse SUA data according to input
+
 selectedSUAData = function(input, output, session){
 
 reactive({

@@ -1,3 +1,5 @@
+# This function provides a second input option for the browse data page
+
 selectizeBrowseData = function(){
 
   tagList(

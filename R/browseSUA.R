@@ -1,3 +1,5 @@
+# This function provides an ui page to browse SUAs
+
 browseSUA = function(){
 
   tagList(

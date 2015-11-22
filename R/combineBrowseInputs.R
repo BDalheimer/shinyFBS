@@ -1,3 +1,5 @@
+# This function observes both inputs on the browse data page and updates the input accordingly
+
 combineBrowseInputs = function(input, output, session){
   
   observeEvent(input$selectizeGeographicArea, {

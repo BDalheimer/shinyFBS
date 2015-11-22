@@ -1,3 +1,5 @@
+# This function renders all individual SUA tables. TO DO: Substitute for loop with apply
+
 renderSUATables = function(input, output, session,individualSUATables) {
   
   for(x in suaElementTable[, Element]) {local({
