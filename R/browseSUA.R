@@ -3,32 +3,37 @@
 browseSUA = function(){
 
   tagList(
-fluidRow(
+
+  fluidRow(
+    
+  
   
   # Create selection filters for SUA tables
-  column(3, 
-         selectInput("SUAgeographicArea", 
+         column(3,
+         selectizeInput("SUAgeographicArea", 
                      "Geographic Area:", 
-                     c("All", 
-                       unique(as.character(sua$geographicArea))), multiple=F, selectize=F)
-  ),
-  column(3, 
-         selectInput("SUAItem", 
+                      c("", unique(as.character(sua$geographicArea))), multiple=F, selected = NULL)),
+         column(2, 
+         selectizeInput("SUAtimePointYears", 
+                     "Year:", 
+                       c("", unique(as.character(sua$timePointYears))), multiple=F, selected = NULL)),
+         
+
+         column(3,
+         selectizeInput("SUAItem", 
                      "Item:", 
-                     c("All", 
-                       unique(as.character(sua$Item))), multiple=T, selectize=F)
+                       c("", unique(as.character(sua$Item))), multiple=F, selected = NULL))
   ),
   
-  column(3, 
-         selectInput("SUAtimePointYears", 
-                     "Years:", 
-                     c("All", 
-                       unique(as.character(sua$timePointYears))), multiple=F, selectize=F)
-  )
-),
+  
+  
+
 # Output Sua table
-fluidRow(
-  dataTableOutput(outputId="tableSUA")
+fluidPage(h3("Supply and Utilization Accounts:"), h4(textOutput("suaTitle")),
+  fluidRow(tableOutput(outputId="tableSUA")),
+  fluidRow(plotOutput("suaPlot"))
 )
 )
+
+
 }

@@ -5,7 +5,7 @@ renderSUATables = function(input, output, session,individualSUATables) {
   for(x in suaElementTable[, Element]) {local({
     i = x
     output[[paste("table", i, sep="")]] = renderRHandsontable({
-      rhandsontable(individualSUATables()[[i]], useTypes = F, rowHeaders = NULL) %>%
+      rhandsontable(individualSUATables()[[i]], useTypes = T, rowHeaders = NULL) %>%
         hot_cols(colWidths = 100) %>%
         hot_rows(rowHeights = 20) %>%
         hot_cols(fixedColumnsLeft = 2) %>%

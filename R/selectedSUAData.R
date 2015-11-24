@@ -4,19 +4,23 @@ selectedSUAData = function(input, output, session){
 
 reactive({
   
-if (input$SUAgeographicArea != "All"){
-  sua = sua[sua$geographicArea %in% input$SUAgeographicArea,]
-}
+  validate(
+    need(input$SUAgeographicArea != "" |
+           input$SUAItem != ""|
+           input$SUAtimePointYears != "",
+            "Please select Area Year and Item")
+  )
+  
+  suaSmall = sua
+  setkey(suaSmall, geographicArea, Item, timePointYears)
 
-if (input$SUAItem != "All"){
-  sua = sua[sua$Item %in% input$SUAItem,]
-}
-
-if (input$SUAtimePointYears != "All"){
-  sua = sua[sua$timePointYears %in% input$SUAtimePointYears,]
-}
+  suaSmall = suaSmall[J(input$SUAgeographicArea, input$SUAItem, input$SUAtimePointYears), nomatch = 0L]
+  #targetSUA = targetSUA[J("Australia", "2012", "Apples")]
+  targetSUA = targetSUA[J(input$SUAgeographicArea, input$SUAtimePointYears, input$SUAItem)]
 
 
-sua
+  if(input$SUAgeographicArea != "" & input$SUAItem != "" & input$SUAtimePointYears != "")
+    targetSUA = targetSUA[suaSmall, names(suaSmall) := suaSmall, on = c("geographicArea", "timePointYears", "Item")][, 
+                                                         -c("geographicArea", "timePointYears", "Item"), with = F]
 })
 }
