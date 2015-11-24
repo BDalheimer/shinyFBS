@@ -4,11 +4,11 @@
 makeWideSuaDataTables = function(input, output, session){
   
 reactive({
-
+  #input$FBSSUAarea
   #for (i in suaElementTable[, measuredElement]){
   wideTables = lapply(suaElementTable[, measuredElement], function(i){
   setkey(data, geographicArea, measuredElement, timePointYears)
-  suaElementData = data[J("Australia", paste(i), 
+  suaElementData = data[J(input$FBSSUAarea, paste(i), 
                           as.character(input$sliderYearRange[1]:input$sliderYearRange[2])), 
                         nomatch = 0L]
   setkey(suaElementData, measuredItemCPC, timePointYears) 
@@ -30,7 +30,7 @@ reactive({
    
     setnames(wideSuaTable, c("measuredItemCPC", "Item", paste0(input$sliderYearRange[1]:input$sliderYearRange[2])))
     setkey(wideSuaTable, measuredItemCPC)
-    
+    wideSuaTable = wideSuaTable[, lapply(.SD, as.numeric), by=.(measuredItemCPC, Item)]
   }
   # wrap up outputs in list (table and corresponding cpc codes to be used as rownames in rhandsontable)
   

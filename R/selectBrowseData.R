@@ -76,7 +76,9 @@ checkboxInput("showFlags", "Show Flags", TRUE), checkboxInput("showCodes", "Show
 
 ),
 tags$style(type='text/css', "#browseLong {width:100%; margin-top: 4px; margin-bottom: 2px;}"),
-tags$style(type='text/css', "#exportBrowse { width:100%; margin-top: -7px; margin-bottom: 5px;}")
+tags$style(type='text/css', "#exportBrowse { width:100%; margin-top: -7px; margin-bottom: 5px;}"),
+
+fluidRow(dataTableOutput(outputId = "tableData"))
 )
 
 }
