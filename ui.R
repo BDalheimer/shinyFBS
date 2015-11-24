@@ -6,9 +6,9 @@ shinyUI(
     tabPanel(title ="Browse Data",
     
       fluidPage(
-       selectBrowseData(),# selection filters
-       selectizeBrowseData(), # selection filters
-       browseTableButtons() # output table and buttons
+       selectBrowseData()# selection filters
+       #selectizeBrowseData() # selection filters
+       #browseTableButtons() # output table and buttons
     
     )),
   
@@ -17,12 +17,12 @@ shinyUI(
   
   
   # Page for SUA tables
-  tabPanel(title= "SUA", "Supply and Utilization Accounts",
+  tabPanel(title= "SUA", "",
            browseSUA() 
   ),
 
   #Compiler Pages
-  tabPanel(title= "Compile SUA and FBS",
+  tabPanel(title= "Compile SUA and FBS",h5("Under Construction"),
            sequenceSUAFBS()
   ),
   
