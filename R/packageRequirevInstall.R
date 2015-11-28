@@ -3,7 +3,7 @@
 
 packageRequirevInstall = function(){
   
-  packagesCran = c("shiny", "data.table", "rhandsontable", "shinyBS", "devtools")
+  packagesCran = c("shiny", "data.table", "rhandsontable", "shinyBS", "devtools", "ggplot2")
   
   if (length(setdiff(packagesCran, rownames(installed.packages()))) > 0) {
     install.packages(setdiff(packagesCran, rownames(installed.packages())))  

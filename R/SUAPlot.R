@@ -1,6 +1,6 @@
 # This function provides a second input option for the browse data page
 
-renderSUAPlot = function(input, output, session){
+SUAPlot = function(input, output, session, selectedSUAtable){
   
   suaPlotData = cbind(id.var = c("id.var"), selectedSUAtable()) 
   suaPlotMelted = melt(suaPlotData, id.vars = "id.var")
