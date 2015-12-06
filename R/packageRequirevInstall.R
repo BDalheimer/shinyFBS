@@ -3,14 +3,15 @@
 
 packageRequirevInstall = function(){
   
-  packagesCran = c("shiny", "data.table", "rhandsontable", "shinyBS", "devtools", "ggplot2")
+  packagesCran = c("shiny", "data.table", "shinyBS", "devtools", "ggplot2")
   
   if (length(setdiff(packagesCran, rownames(installed.packages()))) > 0) {
     install.packages(setdiff(packagesCran, rownames(installed.packages())))  
   }
   lapply(packagesCran, require, character.only = T)
   
-  packagesGitHub = data.table(package = "shinysky", path = "AnalytixWare/ShinySky")
+  packagesGitHub = data.table(package = c("shinysky", "rhandsontable"), 
+                              path = c("AnalytixWare/ShinySky", "jrowen/rhandsontable"))
   
   if (length(setdiff(packagesGitHub[, package], rownames(installed.packages()))) > 0) {
     devtools::install_github(packagesGitHub[!package  %in% rownames(installed.packages()), path])  
