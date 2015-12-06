@@ -47,7 +47,7 @@ fluidPage(
                        ),
               
               tabPanel("Production",
-                       fluidRow(column(4, h3(textOutput("Production"))),
+                       fluidRow(column(4, h3("Production")),
                                 column(2, actionButton("productionEst","Estimate Data ", align = 'center', styleclass="primary", block=T)),
                                 column(2, actionButton("upload", "Upload File", styleclass="warning",block =T)),       
                                 column(2, actionButton("productionVisualize", "Visualize", styleclass="danger",block =T)),
@@ -73,7 +73,7 @@ fluidPage(
               ),
               
               tabPanel("Stocks", 
-                       fluidRow(column(width = 10, h3(textOutput("Stocks"))), 
+                       fluidRow(column(width = 10, h3("Stocks")), 
                                 column(width = 2, actionButton("stocksSave", "Save and Continue", styleclass = 'success'))
                        ), tags$style(type='text/css', "#stocksSave { width:100%; margin-top: 15px; margin-bottom: 15px}"),
                        
@@ -81,7 +81,7 @@ fluidPage(
               ),
               
               tabPanel("Food",
-                       fluidRow(column(width = 10, h3(textOutput("Food Use"))), 
+                       fluidRow(column(width = 10, h3("Food Use")), 
                                 column(width = 2,actionButton("foodSave", "Save and Continue", styleclass = 'success'))
                        ), tags$style(type='text/css', "#foodSave { width:100%; margin-top: 15px; margin-bottom: 15px}"),
                        rHandsontableOutput("tableFood Use")
@@ -89,28 +89,28 @@ fluidPage(
               ),
               
               tabPanel("Feed", 
-                       fluidRow(column(width = 10, h3(textOutput("Feed Use"))), 
+                       fluidRow(column(width = 10, h3("Feed Use")), 
                                 column(width = 2, actionButton("feedSave", "Save and Continue", styleclass = 'success'))
                        ), tags$style(type='text/css', "#feedSave { width:100%; margin-top: 15px; margin-bottom: 15px}"),
                        rHandsontableOutput("tableFeed Use")
               ),
               
               tabPanel("Seed", 
-                       fluidRow(column(width = 10, h3(textOutput("Seed"))), 
+                       fluidRow(column(width = 10, h3("Seed")), 
                                 column(width = 2, actionButton("seedSave", "Save and Continue", styleclass = 'success'))
                        ), tags$style(type='text/css', "#seedSave { width:100%; margin-top: 15px; margin-bottom: 15px}"),
                        rHandsontableOutput("tableSeed")
               ),
               
               tabPanel("Food Losses & Waste", 
-                       fluidRow(column(width = 10, h3(textOutput("Food Losses & Waste"))), 
+                       fluidRow(column(width = 10, h3("Food Losses & Waste")), 
                                 column(width = 2, actionButton("flwSave", "Save and Continue", styleclass = 'success'))
                        ), tags$style(type='text/css', "#flwSave { width:100%; margin-top: 15px; margin-bottom: 15px}"),
                        rHandsontableOutput("tableFood Losses & Waste")
               ),
               
               tabPanel("Industrial Use", 
-                       fluidRow(column(width = 10, h3(textOutput("Industrial Use"))), 
+                       fluidRow(column(width = 10, h3("Industrial Use")), 
                                 column(width = 2, actionButton("industrialSave", "Save and Continue", styleclass = 'success'))
                        ), tags$style(type='text/css', "#industrialSave { width:100%; margin-top: 15px; margin-bottom: 15px}"),
                        rHandsontableOutput("tableIndustrial Use")

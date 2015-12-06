@@ -19,11 +19,11 @@ shinyServer(function(input, output, session) {
   
 
 # Just some text output which depends on the chosen year, will be used in headers
-for( x in suaElementTable[, Element]) {local({
-  i = x
-  output[[paste(i)]] = renderText({paste(i ,input$FBSSUAyear)})
-})
-}
+# for( x in suaElementTable[, Element]) {local({
+#   i = x
+#   output[[paste(i)]] = renderText({paste(i ,input$FBSSUAyear)})
+# })
+# }
 
    output$suaTitle = renderText({SUATitle(input, output, session)})
 # input/output tables for SUA elemnts 
@@ -35,10 +35,9 @@ renderSUATables(input, output, session, individualSUATables)
 # save & continue buttons
 observeSequentiallyActive(input, output, session)
 
+# plots
 output$suaPlot = renderPlot({SUAPlot(input, output, session, selectedSUAtable)})
   
-  
-
 
 output$plotProduction = renderPlot({ 
   plotData = input$tableProduction_select[input$tableProduction_select$select$r, ]

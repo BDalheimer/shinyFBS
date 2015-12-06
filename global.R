@@ -5,13 +5,12 @@ sapply(list.files(pattern="[.]R$", path="R/", full.names=TRUE), source)
 
 
 # Read data
-# Option 1: Single country
 suaElementTable = readRDS("Data/suaElementTable.rda")
 
-# Option 2: multiple (all) country data
+# Option 1: multiple (all) country data
 #data = readRDS("Data/data.rda")
 
-## single country data 
+## # Option 2: Single country data 
 data = readRDS("Data/testData.rda")
 
 # only required for multiple country data (oddly)

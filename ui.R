@@ -22,7 +22,7 @@ shinyUI(
   ),
 
   #Compiler Pages
-  tabPanel(title= "Compile SUA and FBS",h5("Under Construction"),
+  tabPanel(title= "Compile SUA and FBS",
            sequenceSUAFBS()
   ),
   
