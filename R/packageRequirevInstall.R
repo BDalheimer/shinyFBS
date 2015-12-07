@@ -13,9 +13,10 @@ packageRequirevInstall = function(){
   packagesGitHub = data.table(package = c("shinysky", "rhandsontable"), 
                               path = c("AnalytixWare/ShinySky", "jrowen/rhandsontable"))
   
-  if (length(setdiff(packagesGitHub[, package], rownames(installed.packages()))) > 0) {
+ # temporary bug fix. there's probably a more elegant way to do this
+ # if (length(setdiff(packagesGitHub[, package], rownames(installed.packages()))) > 0) {
     devtools::install_github(packagesGitHub[!package  %in% rownames(installed.packages()), path])  
-  }
+  #}
   
   lapply(packagesGitHub[, package], require, character.only = T)
 }
