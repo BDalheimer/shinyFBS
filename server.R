@@ -37,21 +37,27 @@ renderSUATables(input, output, session, individualSUATables)
 # save & continue buttons
 observeSequentiallyActive(input, output, session)
 
-
-output$test = renderDataTable({ hot_to_r(input$tableProduction)})
-
-# uncomment lines below if action button is used to commit changes
-
-
-# 
-# 
-
-#  observe({
-#    if(input$productionSave != 0){
-#      write.csv(hot_to_r(input$tableProduction), "test.csv")
-# #     #print(tempfile())
-#    }
-#  })
+# test to save data (still crashing)
+#   observeEvent({
+#     if(input$productionSave != 0){
+#       
+#       newData = data.table(hot_to_r(input$tableProduction))
+#       newLongData = melt.data.table(newData, id.vars = c("measuredItemCPC", "Item"), 
+#                                     variable.name = "timePointYears", value.name = "Value")
+#       newLongData[, timePointYears := as.character(timePointYears)]
+#       ## This is just for now
+#       newLongData[, geographicAreaM49 := as.character(rep("36", length(newLongData[, measuredItemCPC])))]
+#       newLongData[, geographicArea := as.character(rep(paste("Australia"), length(newLongData[, measuredItemCPC])))]
+#       newLongData[, Element := as.character(rep("Production", length(newLongData[, measuredItemCPC])))]  
+#       newLongData[, measuredElement := as.character(rep("5510", length(newLongData[, measuredItemCPC])))]
+#       
+#       data[newLongData, names(newLongData) := newLongData, on = c("geographicArea", "geographicAreaM49", "measuredItemCPC",
+#                                                                   "Item", "measuredElement", "Element", "timePointYears"), with =F]
+#       
+#       write.csv(data, "test.csv")
+# # #     #print(tempfile())
+#     }
+#   })
 
 
 # plots

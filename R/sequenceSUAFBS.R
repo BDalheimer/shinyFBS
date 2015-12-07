@@ -57,8 +57,7 @@ fluidPage(
                        tags$style(type='text/css', "#upload { width:100%; margin-top: 15px; margin-bottom: 15px;}"),
                        tags$style(type='text/css', "#productionVisualize { width:100%; margin-top: 15px; margin-bottom: 15px;}"),
                        tags$style(type='text/css', "#productionSave { width:100%; margin-top: 15px; margin-bottom: 15px;}"),
-                       bsModal("productionEstimation", "Request additional input for estimation here", "productionEst", size = "large",
-                               dataTableOutput("test")),
+                       bsModal("productionEstimation", "Request additional input for estimation here", "productionEst", size = "large"),
                        bsModal("productionVisual", "Selected Plot", "productionVisualize", size = "large", 
                                plotOutput("plotProduction")),
                        rHandsontableOutput("tableProduction")

@@ -2,8 +2,6 @@
 sapply(list.files(pattern="[.]R$", path="R/", full.names=TRUE), source)
 ## Require packages or install if missing
  packageRequirevInstall()
-
- 
 # Read data
 suaElementTable = readRDS("Data/suaElementTable.rda")
 
