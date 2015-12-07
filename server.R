@@ -16,7 +16,7 @@ shinyServer(function(input, output, session) {
    selectedSUAtable = selectedSUAData(input, output, session)
    
    output$tableSUA = renderTable({selectedSUAtable()})
-  
+    
 
 # Just some text output which depends on the chosen year, will be used in headers
 # for( x in suaElementTable[, Element]) {local({
@@ -24,16 +24,35 @@ shinyServer(function(input, output, session) {
 #   output[[paste(i)]] = renderText({paste(i ,input$FBSSUAyear)})
 # })
 # }
-
+   
+    
    output$suaTitle = renderText({SUATitle(input, output, session)})
-# input/output tables for SUA elemnts 
+# input/output tables for SUA elements 
 
 individualSUATables = makeWideSuaDataTables(input, output, session)
+
 
 renderSUATables(input, output, session, individualSUATables)
 
 # save & continue buttons
 observeSequentiallyActive(input, output, session)
+
+
+output$test = renderDataTable({ hot_to_r(input$tableProduction)})
+
+# uncomment lines below if action button is used to commit changes
+
+
+# 
+# 
+
+#  observe({
+#    if(input$productionSave != 0){
+#      write.csv(hot_to_r(input$tableProduction), "test.csv")
+# #     #print(tempfile())
+#    }
+#  })
+
 
 # plots
 output$suaPlot = renderPlot({SUAPlot(input, output, session, selectedSUAtable)})
