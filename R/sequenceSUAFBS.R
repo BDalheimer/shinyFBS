@@ -58,8 +58,8 @@ fluidPage(
                        tags$style(type='text/css', "#productionVisualize { width:100%; margin-top: 15px; margin-bottom: 15px;}"),
                        tags$style(type='text/css', "#productionSave { width:100%; margin-top: 15px; margin-bottom: 15px;}"),
                        bsModal("productionEstimation", "Request additional input for estimation here", "productionEst", size = "large"),
-                       bsModal("productionVisual", "Selected Plot", "productionVisualize", size = "large", 
-                               plotOutput("plotProduction")),
+                       bsModal("productionVisual", "Selected Plot", "productionVisualize", size = "large"),
+                               #plotOutput("plotProduction")),
                        rHandsontableOutput("tableProduction")
               ),
               
@@ -130,8 +130,12 @@ fluidPage(
                        rHandsontableOutput("tableResidual Other Uses")
               ),
               
-              tabPanel("Save All", actionButton("saveSave", "Save and Continue", styleclass = 'success'))
-              
+              tabPanel("Save All", 
+                       fluidPage(h3("Done!"), br(), 
+                          actionButton("saveSave", "Save All", styleclass = 'success'),
+                          actionButton("restoreDefault", "Restore Default", styleclass = 'warning'), br(), br(),
+                          bsAlert("restartShiny"))
+              )
               
               )
 )

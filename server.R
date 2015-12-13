@@ -32,33 +32,16 @@ shinyServer(function(input, output, session) {
 individualSUATables = makeWideSuaDataTables(input, output, session)
 
 
+
 renderSUATables(input, output, session, individualSUATables)
 
 # save & continue buttons
 observeSequentiallyActive(input, output, session)
 
-# test to save data (still crashing)
-#   observeEvent({
-#     if(input$productionSave != 0){
-#       
-#       newData = data.table(hot_to_r(input$tableProduction))
-#       newLongData = melt.data.table(newData, id.vars = c("measuredItemCPC", "Item"), 
-#                                     variable.name = "timePointYears", value.name = "Value")
-#       newLongData[, timePointYears := as.character(timePointYears)]
-#       ## This is just for now
-#       newLongData[, geographicAreaM49 := as.character(rep("36", length(newLongData[, measuredItemCPC])))]
-#       newLongData[, geographicArea := as.character(rep(paste("Australia"), length(newLongData[, measuredItemCPC])))]
-#       newLongData[, Element := as.character(rep("Production", length(newLongData[, measuredItemCPC])))]  
-#       newLongData[, measuredElement := as.character(rep("5510", length(newLongData[, measuredItemCPC])))]
-#       
-#       data[newLongData, names(newLongData) := newLongData, on = c("geographicArea", "geographicAreaM49", "measuredItemCPC",
-#                                                                   "Item", "measuredElement", "Element", "timePointYears"), with =F]
-#       
-#       write.csv(data, "test.csv")
-# # #     #print(tempfile())
-#     }
-#   })
-
+  
+# save data back to database and restore default data
+observeSaveRestore(input, output, session)
+  
 
 # plots
 output$suaPlot = renderPlot({SUAPlot(input, output, session, selectedSUAtable)})
