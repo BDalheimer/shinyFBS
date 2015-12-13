@@ -18,7 +18,7 @@ data = readRDS("Data/testData.rda")
 setkey(data, geographicAreaM49, measuredItemCPC, measuredElement, timePointYears)
 
 # standardize data formats
-data <- data[, .(geographicAreaM49, geographicArea, measuredItemCPC, Item, 
+data <- data[,.(geographicAreaM49, geographicArea, measuredItemCPC, Item, 
                  measuredElement, Element, timePointYears, Year, Value, Status, Method)]
 
 data[, c("geographicAreaM49", "geographicArea", "measuredItemCPC", "Item", 

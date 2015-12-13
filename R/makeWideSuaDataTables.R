@@ -7,8 +7,8 @@ reactive({
   
   wideTables = lapply(suaElementTable[, measuredElement], function(i){
   setkey(data, geographicArea, measuredElement, timePointYears)
-              
   suaElementData = data[J(input$FBSSUAarea, paste(i), 
+                          #input$sliderYearRange[1]:input$sliderYearRange[2]
                         as.character(input$sliderYearRange[1]:input$sliderYearRange[2])), 
                         nomatch = 0L]
   setkey(suaElementData, measuredItemCPC, timePointYears) 
@@ -19,6 +19,7 @@ reactive({
   
   if(nrow(suaElementData) != 0) {
     # reshape existing data
+    suaElementData[, timePointYears := paste("[", timePointYears, "]", sep="")]
     wideSuaTable = dcast.data.table(suaElementData, 
                                     measuredItemCPC + Item ~ timePointYears, value.var = "Value")
     
@@ -32,7 +33,7 @@ reactive({
                                     matrix(ncol = length(input$sliderYearRange[1]:input$sliderYearRange[2]), 
                                            nrow = length(unique(data$Item)))))
    
-    setnames(wideSuaTable, c("measuredItemCPC", "Item", paste0(input$sliderYearRange[1]:input$sliderYearRange[2])))
+    setnames(wideSuaTable, c("measuredItemCPC", "Item", paste("[", input$sliderYearRange[1]:input$sliderYearRange[2], "]", sep = "")))
     setkey(wideSuaTable, measuredItemCPC)
     wideSuaTable = wideSuaTable[, lapply(.SD, as.numeric), by=.(measuredItemCPC, Item)]
     
@@ -41,6 +42,7 @@ reactive({
 #   wideSuaTable = as.data.table(wideSuaTable)
 #   wideSuaTable[measuredItemCPC := as.character(measuredItemCPC)]
 #   wideSuaTable[ItemCPC := as.character(ItemCPC)]
+  #setnames(wideSuaTable, c("measuredItemCPC", "Item", "Number1", "Number2", "Number3", "Number4"))
  wideSuaTable
  
  
