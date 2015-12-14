@@ -28,7 +28,7 @@ fluidPage(
                                               h4("Please select:"),
                                               selectInput("FBSSUAarea", 
                                                           "Area:", 
-                                                          unique(data$geographicArea), selected = unique(data$geographicArea)[1]
+                                                          areaCodeName, selected = areaCodeName[1]
                                               ),
                                               selectizeInput("FBSSUAyear", 
                                                              "Year:", 
