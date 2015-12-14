@@ -9,21 +9,21 @@ fluidRow(
 column(3, 
        selectInput("selectGeographicArea", 
                    "Select Area:", 
-                   c("All", apply(unique(data[, .(geographicAreaM49, geographicArea)]), 1, paste, collapse= " | ")),
+                   c("All", areaCodeName),
                      multiple = T, selectize = F)
 ),
 
 column(3, 
        selectInput("selectElement", 
                    "Select Element:", 
-                   c("All", apply(unique(data[, .(measuredElement, Element)]), 1, paste, collapse = " | ")),
+                   c("All", elementCodeName),
                     multiple = T, selectize = F)
 ),
 
 column(4, 
        selectInput("selectItem", 
                    "Select Item:", 
-                   c("All", apply(unique(data[, .(measuredItemCPC, Item)]), 1, paste, collapse = " | ")), 
+                   c("All", itemCodeName), 
                      multiple = T, selectize = F)
 ),
 
@@ -39,7 +39,7 @@ fluidRow(
          selectizeInput(
            "selectizeGeographicArea", 
            "Enter Area:", 
-           choices = apply(unique(data[, .(geographicAreaM49, geographicArea)]), 1, paste, collapse= " | "), 
+           choices = areaCodeName, 
            multiple = T)
   ), 
   
@@ -47,14 +47,14 @@ fluidRow(
          selectizeInput(
            "selectizeElement", 
            "Enter Elements:", 
-           choices = apply(unique(data[, .(measuredElement, Element)]), 1, paste, collapse= " | "), 
+           choices = elementCodeName, 
            multiple = T)
   ),
   column(4, 
          selectizeInput(
            "selectizeItem", 
            "Enter Items:", 
-           choices = apply(unique(data[, .(measuredItemCPC, Item)]), 1, paste, collapse= " | "), 
+           choices = itemCodeName, 
            multiple = T)
   ),
   column(2, 

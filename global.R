@@ -41,4 +41,11 @@ targetSUA = data.table(cbind(data.table(geographicArea = sua$geographicArea, tim
                        matrix(nrow = length(sua$geographicArea), ncol = length(suaElementTable[, Element]),0))
 
 names(targetSUA) = c("geographicArea", "timePointYears", "Item", paste(suaElementTable[, ElementSWSName]))
-setkey(targetSUA, geographicArea, timePointYears, Item)                    
+setkey(targetSUA, geographicArea, timePointYears, Item)
+
+## Collapsed codes and names
+areaCodeName = apply(unique(data[, .(geographicAreaM49, geographicArea)]), 1, paste, collapse= " | ")
+
+elementCodeName = apply(unique(data[, .(measuredElement, Element)]), 1, paste, collapse = " | ")
+
+itemCodeName = apply(unique(data[, .(measuredItemCPC, Item)]), 1, paste, collapse = " | ")
