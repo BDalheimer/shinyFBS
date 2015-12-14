@@ -1,15 +1,15 @@
 # This function creates wide data tables for each sua element to be rendered in 
 # rhandsontable for sua  data input/output
 
-makeWideSuaDataTables = function(input, output, session){
+makeWideSuaDataTables = function(input, output, session, suaAreaYear){
   
 reactive({
   
   wideTables = lapply(suaElementTable[, measuredElement], function(i){
   setkey(data, geographicArea, measuredElement, timePointYears)
-  suaElementData = data[J(input$FBSSUAarea, paste(i), 
+  suaElementData = data[J(unlist(tstrsplit(input$FBSSUAarea, " | ")[3]), paste(i), 
                           #input$sliderYearRange[1]:input$sliderYearRange[2]
-                        as.character(input$sliderYearRange[1]:input$sliderYearRange[2])), 
+                        as.character(input$sliderYearRange[1]:input$FBSSUAyear)), 
                         nomatch = 0L]
   setkey(suaElementData, measuredItemCPC, timePointYears) 
  
@@ -22,6 +22,7 @@ reactive({
     suaElementData[, timePointYears := paste("[", timePointYears, "]", sep="")]
     wideSuaTable = dcast.data.table(suaElementData, 
                                     measuredItemCPC + Item ~ timePointYears, value.var = "Value")
+     
     
     setkey(wideSuaTable, measuredItemCPC)
    
@@ -39,14 +40,15 @@ reactive({
     
   }
   }
-#   wideSuaTable = as.data.table(wideSuaTable)
-#   wideSuaTable[measuredItemCPC := as.character(measuredItemCPC)]
-#   wideSuaTable[ItemCPC := as.character(ItemCPC)]
-  #setnames(wideSuaTable, c("measuredItemCPC", "Item", "Number1", "Number2", "Number3", "Number4"))
+  
+  if (!paste("[", input$FBSSUAyear, "]", sep ="") %in% names(wideSuaTable)){
+    
+    wideSuaTable[, paste0("[", input$FBSSUAyear, "]", sep="") := rep(0, length(wideSuaTable[, measuredItemCPC])), with = F] 
+  }
+  
+  
  wideSuaTable
  
- 
-
   })
   names(wideTables) = paste(suaElementTable[, Element])
   wideTables
