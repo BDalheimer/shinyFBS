@@ -13,8 +13,8 @@ saveToData = function(input, output, session, individualSUATables){
     inputSUA[, timePointYears := unlist(tstrsplit(timePointYears, "]", fixed = T))]
     inputSUA[, timePointYears := as.character(timePointYears)]
     ## The next 2 lines are for nowFor now:
-    inputSUA[, geographicAreaM49 := as.character(rep("36", length(inputSUA[, measuredItemCPC])))]
-    inputSUA[, geographicArea := as.character(rep("Australia", length(inputSUA[, measuredItemCPC])))]
+    inputSUA[, geographicAreaM49 := as.character(rep(unlist(tstrsplit(input$FBSSUAarea, " | ")[1]), length(inputSUA[, measuredItemCPC])))]
+    inputSUA[, geographicArea := as.character(rep(unlist(tstrsplit(input$FBSSUAarea, " | ")[3]), length(inputSUA[, measuredItemCPC])))]
     inputSUA[, measuredElement := as.character(rep(suaElementTable[Element == x, measuredElement], length(inputSUA[, measuredItemCPC])))]
     inputSUA[, Element := as.character(rep(suaElementTable[Element == x, ElementSWSName], length(inputSUA[, measuredItemCPC])))]
       }else{
