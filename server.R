@@ -17,7 +17,6 @@ shinyServer(function(input, output, session) {
    
    output$tableSUA = renderTable({selectedSUAtable()})
     
-
 # Just some text output which depends on the chosen year, will be used in headers
 # for( x in suaElementTable[, Element]) {local({
 #   i = x
@@ -29,7 +28,7 @@ shinyServer(function(input, output, session) {
    output$suaTitle = renderText({SUATitle(input, output, session)})
 # input/output tables for SUA elements 
 
-individualSUATables = makeWideSuaDataTables(input, output, session)
+individualSUATables = makeWideSuaDataTables(input, output, session, suaAreaYear)
 
 
 
