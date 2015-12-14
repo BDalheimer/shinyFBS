@@ -59,6 +59,44 @@ fluidPage(
                        tags$style(type='text/css', "#productionSave { width:100%; margin-top: 15px; margin-bottom: 15px;}"),
                        bsModal("productionEstimation", "Request additional input for estimation here", "productionEst", size = "large"),
                        bsModal("productionVisual", "Selected Plot", "productionVisualize", size = "large"),
+                       bsModal("uploadFile", "Upload Production Data", "upload", size = "large",  
+                               sidebarLayout(
+                                 sidebarPanel(
+                                   fileInput('productionUpload', 'Choose file to upload',
+                                             accept = c(
+                                               'text/csv',
+                                               'text/comma-separated-values',
+                                               'text/tab-separated-values',
+                                               'text/plain',
+                                               '.csv',
+                                               '.tsv'
+                                             )
+                                   ),
+                                   tags$hr(),
+                                   checkboxInput('header', 'Header', TRUE),
+                                   radioButtons('sep', 'Separator',
+                                                c(Comma=',',
+                                                  Semicolon=';',
+                                                  Tab='\t'),
+                                                ','),
+                                   radioButtons('quote', 'Quote',
+                                                c(None='',
+                                                  'Double Quote'='"',
+                                                  'Single Quote'="'"),
+                                                '"'),
+                                   tags$hr(),
+                                   p('If you want a sample .csv or .tsv file to upload,',
+                                     'you can first download the sample',
+                                     a(href = 'mtcars.csv', 'mtcars.csv'), 'or',
+                                     a(href = 'pressure.tsv', 'pressure.tsv'),
+                                     'files, and then try uploading them.'
+                                   )
+                                 ),
+                                 mainPanel(
+                                   tableOutput('productionUploadTable')
+                                 )
+                               )),
+                               
                                #plotOutput("plotProduction")),
                        rHandsontableOutput("tableProduction")
               ),
