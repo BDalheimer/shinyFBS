@@ -93,13 +93,13 @@ fluidPage(
                                    tags$hr(),
                                    p('If you want a sample .csv or .tsv file to upload,',
                                      'you can first download the sample',
-                                     a(href = 'mtcars.csv', 'mtcars.csv'), 'or',
+                                     a(href = 'uploadTest.csv', 'uploadTest.csv'), 'or',
                                      a(href = 'pressure.tsv', 'pressure.tsv'),
                                      'files, and then try uploading them.'
                                    )
                                  ),
                                  mainPanel(
-                                   tableOutput('productionUploadTable')
+                                  tableOutput('productionUploadTable')
                                  )
                                )),
                                
@@ -174,14 +174,31 @@ fluidPage(
                        rHandsontableOutput("tableResidual Other Uses")
               ),
               
-              tabPanel("Save All", 
-                       fluidPage(h3("Done!"), br(), 
-                          actionButton("saveSave", "Save All", styleclass = 'success'),
-                          actionButton("restoreDefault", "Restore Default", styleclass = 'warning'), br(), br(),
-                          bsAlert("restartShiny"))
+                       tabPanel("Save All",
+                                fluidPage(br(),column(9,h3("SUAs completed!"), br(), br(),
+                                                      h5("Please save your input before continuing with the standardization 
+                                                         and the compilation of Food Balance Sheets...some more text, explanation etc")
+                                                      # verbatimTextOutput("range")
+                                                      ),
+                                          sidebarPanel(width = 3, position = 'right',
+                                                       
+                                                       actionButton("saveSave", "Save All", styleclass = 'success', block = T),
+                                                       actionButton("restoreDefault", "Restore Default", styleclass = 'warning', block = T), br(), br(),
+                                                       bsAlert("restartShiny"),
+                                                       helpText("Note: SUA Data must be saved befor FBS can be constructed." ),
+                                                       actionButton("compileFBS", "Compile FBS!", styleclass = 'danger', block = T))
+                                                               
+                                                     
+                                                       
+                                                       
+                                                      
+                                          )
+                                )
+                                )
+                  
               )
               
               )
-)
-)
+
+
 }

@@ -1,7 +1,7 @@
 # This function creates wide data tables for each sua element to be rendered in 
 # rhandsontable for sua  data input/output
 
-makeWideSuaDataTables = function(input, output, session, suaAreaYear){
+makeWideSuaDataTables = function(input, output, session, suaAreaYear, productionUploadTable){
   
 reactive({
   
@@ -45,7 +45,14 @@ reactive({
     
     wideSuaTable[, paste0("[", input$FBSSUAyear, "]", sep="") := rep(0, length(wideSuaTable[, measuredItemCPC])), with = F] 
   }
-  
+      if(input[[paste("upload", suaElementTable[measuredElement == i, Element], sep ="")]] > 0){
+  uploadData = as.data.table(productionUploadTable())
+  names(uploadData) = c("measuredItemCPC", paste0("[", input$FBSSUAyear, "]", sep=""))
+  uploadData[, measuredItemCPC := as.character(measuredItemCPC)]
+  uploadData[, (2:(ncol(uploadData))) := lapply(.SD, as.numeric), 
+             .SDcols = 2:(ncol(uploadData))]
+  wideSuaTable[uploadData, names(uploadData) := uploadData, on = c("measuredItemCPC"), nomatch = NA]
+    }
   
  wideSuaTable
  
