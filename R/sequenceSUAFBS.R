@@ -58,7 +58,7 @@ fluidPage(
                        tags$style(type='text/css', "#productionVisualize { width:100%; margin-top: 15px; margin-bottom: 15px;}"),
                        tags$style(type='text/css', "#productionSave { width:100%; margin-top: 15px; margin-bottom: 15px;}"),
                        bsModal("productionEstimation", "Request additional input for estimation here", "productionEst", size = "large"),
-                       bsModal("productionVisual", "Selected Plot", "productionVisualize", size = "large"),
+                       bsModal("productionVisual", "Australia, Production", "productionVisualize", size = "large", dygraphOutput("productionPlot")), #tableOutput("testTable")
                        bsModal("uploadFile", "Upload Production Data", "upload", size = "large",  
                                sidebarLayout(
                                  sidebarPanel(
@@ -72,7 +72,7 @@ fluidPage(
                                                '.tsv'
                                              )
                                    ),
-                                   tags$hr(),
+                                   #tags$hr(),
                                    checkboxInput('header', 'Header', TRUE),
                                    radioButtons('sep', 'Separator',
                                                 c(Comma=',',
@@ -84,6 +84,12 @@ fluidPage(
                                                   'Double Quote'='"',
                                                   'Single Quote'="'"),
                                                 '"'),
+                                    radioButtons('recognize', "Recognize Items through", 
+                                                 c(CPCcode = "CPCCode", Description = "Description")),
+                                   numericInput("obs", "Column Number:", 1,
+                                                min = 1, max = 100),
+                                   
+                                   actionButton("uploadProduction", "Upload!", styleclass="success"),
                                    tags$hr(),
                                    p('If you want a sample .csv or .tsv file to upload,',
                                      'you can first download the sample',
